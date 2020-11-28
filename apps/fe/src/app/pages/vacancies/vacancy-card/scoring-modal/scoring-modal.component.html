@@ -1,1 +1,35 @@
-<p>scoring-modal works!</p>
+<div nz-row>
+  <div nz-col nzSpan="6">
+    <nz-progress [nzPercent]="candidateScoring.scoring.percent | number:'1.0-0'"
+                 nzType="circle"
+                 [nzWidth]="80"></nz-progress>
+  </div>
+  <div nz-col nzSpan="9">
+    <p nz-typography nzType="secondary">Совпадающие</p>
+    <nz-tag *ngFor="let skill of candidateScoring.scoring.matchingSkills"
+            [nzColor]="'blue'">{{ skill }}</nz-tag>
+  </div>
+  <div nz-col nzSpan="9">
+    <p nz-typography nzType="secondary">Дополнительные навыки из резюме</p>
+    <nz-tag *ngFor="let skill of candidateScoring.scoring.additionalSkills"
+            [nzColor]="'geekblue'">{{ skill }}</nz-tag>
+  </div>
+</div>
+<div nz-row class="scoring-reasons">
+  <div nz-col nzSpan="12">
+    <ul>
+      <li *ngFor="let item of candidateScoring.scoring.positiveTags">
+        <i nz-icon [nzType]="'plus'"></i>
+        <span>{{ item }}</span>
+      </li>
+    </ul>
+  </div>
+  <div nz-col nzSpan="12">
+    <ul>
+      <li *ngFor="let item of candidateScoring.scoring.negativeTags">
+        <i nz-icon [nzType]="'minus'"></i>
+        <span>{{ item }}</span>
+      </li>
+    </ul>
+  </div>
+</div>

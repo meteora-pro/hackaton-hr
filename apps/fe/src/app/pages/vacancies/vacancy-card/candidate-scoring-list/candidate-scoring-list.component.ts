@@ -41,8 +41,10 @@ export class CandidateScoringListComponent implements OnInit {
       nzContent: ScoringModalComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
-        scoring
+        candidateScoring: scoring
       },
+      nzWidth: 780,
+      nzFooter: null,
       nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
     });
   }
