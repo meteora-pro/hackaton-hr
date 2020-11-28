@@ -11,3 +11,128 @@ stages:
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /Increment version/
+
+# API SERVICE
+.only-api-changes: &only-api-changes
+  changes:
+    - libs/**/*
+    - tools/**/*
+    - deploy/api/**/*
+    - apps/api/**/*
+
+.only-api: &only-api
+  only:
+    <<: *only-api-changes
+
+.only-api-tags: &only-api-tags
+  only:
+    changes:
+      - apps/api/package.json
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /Increment version api/
+  except:
+    - tags
+
+.increment-api: &increment-api
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /Increment version api/
+
+.branches-api: &branches-api
+  only:
+    <<: *only-api-changes
+  except:
+    - master
+    - tags
+
+# BACKOFFICE SERVICE
+.only-fe-changes: &only-fe-changes
+  changes:
+    - libs/**/*
+    - tools/**/*
+    - deploy/fe/**/*
+    - apps/fe/**/*
+
+.only-fe: &only-fe
+  only:
+    <<: *only-fe-changes
+
+.only-fe-tags: &only-fe-tags
+  only:
+    changes:
+      - apps/fe/package.json
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /Increment version fe/
+  except:
+    - tags
+
+.increment-fe: &increment-fe
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /Increment version fe/
+
+.branches-fe: &branches-fe
+  only:
+    <<: *only-fe-changes
+  except:
+    - master
+    - tags
+
+########################################
+#          INCREMENT VERSION           #
+########################################
+increment-version-api:
+  <<: *increment
+  <<: *node
+  only:
+    <<: *only-api-changes
+    refs:
+      - master
+  stage: increment-version-api
+  variables:
+    CI_REPOSITORY_URL: https://$GIT_ACCESS_USER:$ACCESS_TOKEN_FOR_PUSH@gitlab.com/$CI_PROJECT_PATH.git
+  script:
+    - git config --global http.postBuffer 157286400
+    - git config user.name $GIT_ACCESS_USER
+    - git config user.email $GITLAB_USER_EMAIL
+    - git pull origin master
+    - cd apps/api
+    - export GIT_TAG_VERSION=api-release-$(npm --no-git-tag-version version patch)
+    - cd ../..
+    - export PROJECT_VERSION=$(egrep -o '[[:digit:]]{1,}\.[[:digit:]]{1,}\.[[:digit:]]{1,}' ./apps/api/package.json | head -n1)
+    - echo $PROJECT_VERSION > apps/api/version
+    - sed -i -- "s/appVersion:[[:space:]][[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+/appVersion:\ $PROJECT_VERSION/g" ./deploy/api/Chart.yaml
+    - echo $(git push --delete $CI_REPOSITORY_URL $GIT_TAG_VERSION) || true
+    - git add . && git commit -m "[Increment version api $GIT_TAG_VERSION]"
+    - git tag $GIT_TAG_VERSION
+    - git pull origin master
+    - git push $CI_REPOSITORY_URL HEAD:master
+    - echo $(git push --tags $CI_REPOSITORY_URL HEAD:$CI_COMMIT_REF_NAME) || true
+
+increment-version-fe:
+  <<: *increment
+  <<: *node
+  only:
+    <<: *only-fe-changes
+    refs:
+      - master
+  stage: increment-version-fe
+  variables:
+    CI_REPOSITORY_URL: https://$GIT_ACCESS_USER:$ACCESS_TOKEN_FOR_PUSH@gitlab.com/$CI_PROJECT_PATH.git
+  script:
+    - git config --global http.postBuffer 157286400
+    - git config user.name $GIT_ACCESS_USER
+    - git config user.email $GITLAB_USER_EMAIL
+    - git pull origin master
+    - cd apps/fe
+    - export GIT_TAG_VERSION=fe-release-$(npm --no-git-tag-version version patch)
+    - cd ../..
+    - export PROJECT_VERSION=$(egrep -o '[[:digit:]]{1,}\.[[:digit:]]{1,}\.[[:digit:]]{1,}' ./apps/fe/package.json | head -n1)
+    - echo $PROJECT_VERSION > apps/fe/version
+    - sed -i -- "s/appVersion:[[:space:]][[:digit:]]\+.[[:digit:]]\+.[[:digit:]]\+/appVersion:\ $PROJECT_VERSION/g" ./deploy/fe/Chart.yaml
+    - echo $(git push --delete $CI_REPOSITORY_URL $GIT_TAG_VERSION) || true
+    - git add . && git commit -m "[Increment version fe $GIT_TAG_VERSION]"
+    - git tag $GIT_TAG_VERSION
+    - git pull origin master
+    - git push $CI_REPOSITORY_URL HEAD:master
+    - echo $(git push --tags $CI_REPOSITORY_URL HEAD:$CI_COMMIT_REF_NAME) || true
