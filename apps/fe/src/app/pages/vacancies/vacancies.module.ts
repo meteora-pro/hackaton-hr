@@ -16,6 +16,7 @@ import { NgxsModule } from '@ngxs/store';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { VacanciesRoutingModule } from './vacancies-routing.module';
 import { VacancyCardComponent } from './vacancy-card/vacancy-card.component';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { VacancyCardComponent } from './vacancy-card/vacancy-card.component';
     NzCheckboxModule,
     NzButtonModule,
     NzTableModule,
-    VacanciesRoutingModule
+    VacanciesRoutingModule,
+    NzIconModule
   ]
 })
 export class VacanciesModule { }

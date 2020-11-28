@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'meteora-create-vacancy',
@@ -8,8 +9,7 @@ import { FormBuilder } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateVacancyComponent implements OnInit {
-
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store) {}
   formGroup = this.fb.group({
     name: '',
     salaryFrom: null,
@@ -17,16 +17,18 @@ export class CreateVacancyComponent implements OnInit {
     keySkills: [],
     description: null,
   });
-  filteredOptions = ['Frontend', 'Backend'];
   keySkillOptions = ['React', 'Angular'];
 
-  formatterCurrency = (value: number) => value === null ? null : `${value} ₽`;
+  formatterCurrency = (value: number) => (value === null ? null : `${value} ₽`);
   parserCurrency = (value: string) => value.replace(' ₽', '');
+  optionList = ['test1', 'test2'];
+  isLoading = true;
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  submitForm() {
+  submitForm() {}
 
+  onSearch(searchValue: string): void {
+    console.log('[LOG] onSearch', searchValue);
   }
 }
