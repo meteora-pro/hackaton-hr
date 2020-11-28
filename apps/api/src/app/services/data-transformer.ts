@@ -47,7 +47,7 @@ export class DataTransformer {
         description: rawVacation.description,
         experience: parseVacancyExperience(rawVacation.experience),
         hasTest: rawVacation.has_test,
-        keySkills: rawVacation.key_skills,
+        keySkills: rawVacation.key_skills.map(({ name }) => name),
         name: rawVacation.name,
         publishedAt: parseDate(rawVacation.published_at),
         responseLetterRequired: rawVacation.response_letter_required,
