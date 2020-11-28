@@ -4,7 +4,6 @@ import {
   ExperienceEnum,
   ScheduleEnum,
   Vacancy,
-  VacancyStatusEnum,
 } from '@meteora/api-interfaces';
 import { ApiProperty } from '@nestjs/swagger';
 import { CommonService } from '../services/common/common.service';
