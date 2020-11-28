@@ -104,3 +104,16 @@ export interface Candidate {
   skills: string;
   about: string;
 }
+
+export interface Scoring {
+  positiveTags: string[];
+  negativeTags: string[];
+  percent: number;
+  matchingSkills: string[];
+  additionalSkills: string[];
+}
+
+export interface CandidateScoring {
+  candidate: Candidate,
+  scoring: Scoring,
+}

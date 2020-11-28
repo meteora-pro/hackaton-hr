@@ -1,18 +1,17 @@
-import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { CreateVacancy, LoadVacancies, LoadVacancyCard } from './vacancy.actions';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { CreateVacancy, LoadVacancies } from './vacancy.actions';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { Vacancy } from '@meteora/api-interfaces';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { tap } from 'rxjs/operators';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { Injectable } from '@angular/core';
+import { VacancyCardState } from '../vacancy-card/vacancy-card.state';
 
 export interface VacancyStateModel {
   pagination: NestPaginationResponse<Vacancy>,
   status: StoreStatus,
   perPage: number;
-  // TODO Вынести в substate
-  currentVacancy: Vacancy;
 }
 
 type Ctx = StateContext<VacancyStateModel>;
@@ -29,13 +28,20 @@ type Ctx = StateContext<VacancyStateModel>;
     },
     perPage: 10,
     status: StoreStatus.New,
-    currentVacancy: null,
-  }
+  },
+  children: [
+    VacancyCardState
+  ]
 })
 @Injectable()
 export class VacancyState {
 
   constructor(private nestCrudService: NestCrudService<Vacancy>) {
+  }
+
+  @Selector()
+  public static isLoading(state: VacancyStateModel) {
+    return state.status === StoreStatus.Loading;
   }
 
   @Selector()
@@ -46,11 +52,6 @@ export class VacancyState {
   @Selector()
   public static perPage(state: VacancyStateModel) {
     return state.perPage;
-  }
-
-  @Selector()
-  public static currentVacancy(state: VacancyStateModel) {
-    return state.currentVacancy;
   }
 
   @Action(LoadVacancies)
@@ -86,14 +87,4 @@ export class VacancyState {
     return this.nestCrudService.addItem('vacancy', vacancy);
   }
 
-  @Action(LoadVacancyCard, { cancelUncompleted: true })
-  public loadVacancyCard(ctx: Ctx, { id }: LoadVacancyCard) {
-    return this.nestCrudService.getEntityById('vacancy', id).pipe(
-      tap((response: Vacancy) => {
-        ctx.patchState({
-          currentVacancy: response
-        })
-      })
-    );
-  }
 }
