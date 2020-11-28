@@ -13,7 +13,7 @@ export class importExistData1606574429753 implements MigrationInterface {
     const resumeRepository = queryRunner.connection.getRepository(
       CandidateEntity,
     );
-    const chunks =  MigrationSlicer.sliceData(normalizedCandidate, 25);
+    const chunks = MigrationSlicer.sliceData(normalizedCandidate, 25);
     for ( const [index, chunk] of chunks.entries() ) {
       Logger.log(`Load ${index} of ${chunks.length} resume chunk`);
       await resumeRepository.insert(chunk);
