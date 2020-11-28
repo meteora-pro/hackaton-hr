@@ -3,9 +3,9 @@ import { Select, Store } from '@ngxs/store';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LoadVacancyCard } from '../store/vacancy.actions';
 import { Vacancy } from '@meteora/api-interfaces';
-import { VacancyState } from '../store/vacancy.state';
+import { LoadVacancyCard } from '../vacancy-card.actions';
+import { VacancyCardState } from '../vacancy-card.state';
 
 @Component({
   selector: 'meteora-vacancy-card',
@@ -19,7 +19,7 @@ export class VacancyCardComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               ) { }
 
-  @Select(VacancyState.currentVacancy)
+  @Select(VacancyCardState.vacancy)
   vacancy$: Observable<Vacancy>;
 
   private readonly destroy$ = new Subject<void>();

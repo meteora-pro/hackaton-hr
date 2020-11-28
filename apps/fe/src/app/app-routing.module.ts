@@ -22,6 +22,13 @@ const routes: Routes = [
         (m) => m.CandidatesModule
       ),
   },
+  {
+    path: 'vacancy',
+    loadChildren: () =>
+      import('./pages/vacancies/vacancy-card/vacancy-card.module').then(
+        (m) => m.VacancyCardModule
+      ),
+  },
 ];
 
 @NgModule({

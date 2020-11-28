@@ -15,15 +15,14 @@ import { VacancyState } from './store/vacancy.state';
 import { NgxsModule } from '@ngxs/store';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { VacanciesRoutingModule } from './vacancies-routing.module';
-import { VacancyCardComponent } from './vacancy-card/vacancy-card.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { VacancyCardState } from './vacancy-card/vacancy-card.state';
 
 
 @NgModule({
-  declarations: [CreateVacancyComponent, VacanciesListComponent, VacancyCardComponent],
   imports: [
     CommonModule,
-    NgxsModule.forFeature([VacancyState]),
+    NgxsModule.forFeature([VacancyState, VacancyCardState]),
     NzFormModule,
     ReactiveFormsModule,
     NzInputModule,
@@ -35,6 +34,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzTableModule,
     VacanciesRoutingModule,
     NzIconModule
-  ]
+  ],
+  declarations: [CreateVacancyComponent, VacanciesListComponent],
 })
 export class VacanciesModule { }
