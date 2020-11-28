@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from "@nestjs/config";
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConnectionOptions } from 'typeorm';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
+import { inspect } from 'util';
 import * as packageJson from '../../package.json';
 import * as ormConfig from '../../../../ormconfig.js';
 import { allEntities } from './entities/all.entities';
@@ -10,7 +11,7 @@ import { allMigrations } from './migrations/all.migrations';
 
 @Injectable()
 export class AppConfig {
-  static runtimeEnv = process.env.NODE_ENV === 'development' ?  'staging' : process.env.NODE_ENV;
+  static runtimeEnv = process.env.NODE_ENV || 'development';
   static release = packageJson.version as string;
   static debug = AppConfig.runtimeEnv === 'development';
   constructor(
@@ -34,6 +35,7 @@ export class AppConfig {
       password: this.configService.get('POSTGRES_PASSWORD')  || connection.password,
       database: this.configService.get('DB_NAME')|| connection.database,
     };
+    Logger.log(`${inspect(overrideConfig)}`);
     return {
       ...connection,
       ...overrideConfig,
