@@ -1,0 +1,13 @@
+stages:
+  - increment-version-api
+  - increment-version-fe
+  - build
+  - deploy
+
+.node: &node
+  image: node:10
+
+.increment: &increment
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /Increment version/
