@@ -27,7 +27,7 @@ type Ctx = StateContext<VacancyStateModel>;
       total: null,
       data: [],
     },
-    perPage: 25,
+    perPage: 10,
     status: StoreStatus.New,
     currentVacancy: null,
   }
@@ -39,8 +39,13 @@ export class VacancyState {
   }
 
   @Selector()
-  public static vacancies(state: VacancyStateModel) {
-    return state.pagination.data;
+  public static pagination(state: VacancyStateModel) {
+    return state.pagination;
+  }
+
+  @Selector()
+  public static perPage(state: VacancyStateModel) {
+    return state.perPage;
   }
 
   @Selector()
