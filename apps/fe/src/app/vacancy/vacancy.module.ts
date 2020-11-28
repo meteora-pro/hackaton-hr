@@ -15,6 +15,7 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 const routes: Routes = [
   {
@@ -39,7 +40,8 @@ const routes: Routes = [
     NzAutocompleteModule,
     NzInputNumberModule,
     NzSelectModule,
-    NzCheckboxModule
+    NzCheckboxModule,
+    NzButtonModule
   ],
   declarations: [
     VacancyFormComponent,

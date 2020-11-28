@@ -63,8 +63,6 @@ export interface Experience {
   description: string;
 }
 
-
-
 export interface Vacancy {
   readonly id: number;
   name: string;

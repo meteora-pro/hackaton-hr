@@ -1,5 +1,5 @@
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { VacancyAction } from './vacancy.actions';
+import { CreateVacancy } from './vacancy.actions';
 
 export interface VacancyStateModel {
   items: string[];
@@ -18,10 +18,10 @@ export class VacancyState {
     return state;
   }
 
-  @Action(VacancyAction)
-  public add(ctx: StateContext<VacancyStateModel>, { payload }: VacancyAction) {
+  @Action(CreateVacancy)
+  public add(ctx: StateContext<VacancyStateModel>, { vacancy }: CreateVacancy) {
     const stateModel = ctx.getState();
-    stateModel.items = [...stateModel.items, payload];
+    // stateModel.items = [...stateModel.items, payload];
     ctx.setState(stateModel);
   }
 }

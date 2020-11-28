@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'vacancy',
     loadChildren: () =>
-      import('./pages/vacancy/vacancy.module').then(
+      import('./vacancy/vacancy.module').then(
         (m) => m.VacancyModule
       ),
   },
