@@ -11,7 +11,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   address: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   areaName: string;
 
   @ApiProperty()
@@ -39,7 +39,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   experience: ExperienceEnum;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   hasTest: boolean;
 
   @ApiProperty()
