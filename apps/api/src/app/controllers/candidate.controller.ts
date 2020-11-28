@@ -10,6 +10,8 @@ import { CandidateService } from '../services/candidate.service';
     type: CandidateEntity,
   },
 })
+
+
 @Controller('candidate')
 export class CandidateController implements CrudController<CandidateEntity> {
   constructor(public service: CandidateService) {}
