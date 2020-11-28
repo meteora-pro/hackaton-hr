@@ -7,7 +7,7 @@ import { BaseEntity } from './base.entity';
 @Entity({ name: 'vacancies' })
 export class VacancyEntity extends BaseEntity implements Vacancy {
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   address: string;
 
   @ApiProperty()
@@ -15,7 +15,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   areaName: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   closedAt: Date;
 
 
@@ -35,7 +35,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
     enum: CommonService.enumToArray(ExperienceEnum),
     example: ExperienceEnum.FROM_3_TO_5,
   })
-  @Column({ type: 'enum', enum: ExperienceEnum })
+  @Column({ type: 'enum', enum: ExperienceEnum, nullable: true  })
   experience: ExperienceEnum;
 
   @ApiProperty()
@@ -59,15 +59,15 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   responseLetterRequired: boolean;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   salaryFrom: number;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   salaryGross: boolean;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   salaryTo: number;
 
   @ApiProperty({
@@ -75,7 +75,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
     example: ScheduleEnum.FULL_DAY,
     default: ScheduleEnum.FULL_DAY,
   })
-  @Column({ type: 'enum', enum: ScheduleEnum })
+  @Column({ type: 'enum', enum: ScheduleEnum, nullable: true })
   schedule: ScheduleEnum;
 
   @ApiProperty()
@@ -83,6 +83,6 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   specialization: Specialization[];
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   testUrl: string;
 }

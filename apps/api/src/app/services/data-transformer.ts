@@ -7,6 +7,7 @@ import {
   LanguageLevelEnum,
 } from '../../../../../libs/api-interfaces/src/lib/api-interfaces';
 import { CandidateEntity } from '../entities/candidate.entity';
+import { VacancyEntity } from '../entities/vacancy.entity';
 
 
 export class DataTransformer {
@@ -35,7 +36,32 @@ export class DataTransformer {
     });
   }
 
-  static normalizeVacations(vacations) {}
+  static normalizeVacations(vacations): VacancyEntity[] {
+    return vacations.map(rawVacation => {
+      const vacancy: VacancyEntity = {
+        address: '',
+        areaName: '',
+        description: '',
+        experience: undefined,
+        hasTest: false,
+        id: 0,
+        keySkills: [],
+        name: '',
+        publishedAt: undefined,
+        responseLetterRequired: false,
+        salaryFrom: 0,
+        salaryGross: false,
+        salaryTo: 0,
+        schedule: undefined,
+        specialization: [],
+        testUrl: '',
+        updateAt: undefined,
+        vacancyNumber: '',
+        vacancyOwner: ''
+      };
+      return vacancy;
+    });
+  }
 }
 
 export function parseCurrency(currency: string): number {
