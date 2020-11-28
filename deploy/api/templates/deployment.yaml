@@ -21,23 +21,33 @@ spec:
       serviceAccountName: {{ include "api.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+        - name: "api-env-volume"
+          secret:
+            secretName: "hackaton-hr-api-env-secret"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NODE_ENV
+              value: "production"
+          volumeMounts:
+            - name: "api-env-volume"
+              mountPath: "/usr/api/config/api"
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 3333
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /api/version
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /api/version
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
