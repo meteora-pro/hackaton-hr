@@ -1,11 +1,15 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
-import { BaseEntity } from './base.entity';
 import {
-  Candidate, Education, EducationLevelEnum, Experience, Language
+  Candidate,
+  Education,
+  EducationLevelEnum,
+  Experience,
+  Language,
+  Specialization,
 } from '@meteora/api-interfaces';
 import { ApiProperty } from '@nestjs/swagger';
-import { SpecializationEntity } from './specialization.entity';
+import { Column, Entity } from 'typeorm';
 import { CommonService } from '../services/common/common.service';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'candidates' })
 export class CandidateEntity extends BaseEntity implements Candidate {
@@ -66,13 +70,8 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   skills: string;
 
   @ApiProperty()
-  @ManyToMany(
-    () => SpecializationEntity,
-    (specialization) => specialization.candidates,
-    { nullable: true, onDelete: 'SET NULL', persistence: true }
-  )
-  @JoinTable()
-  specialization: SpecializationEntity[];
+  @Column('jsonb', { default: '[]' })
+  specialization: Specialization[];
 
   @ApiProperty()
   @Column()

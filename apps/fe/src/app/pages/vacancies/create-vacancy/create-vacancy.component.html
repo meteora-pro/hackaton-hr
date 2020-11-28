@@ -1,6 +1,15 @@
-<form nz-form nzLayout="vertical" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+<form
+  nz-form
+  nzLayout="vertical"
+  [formGroup]="formGroup"
+  (ngSubmit)="submitForm()"
+>
   <nz-form-item>
-    <nz-form-label nzFor="nickname" nzRequired nzTooltipTitle="Начните писать требуемую должность чтобы найти то, что нужно">
+    <nz-form-label
+      nzFor="nickname"
+      nzRequired
+      nzTooltipTitle="Начните писать требуемую должность чтобы найти то, что нужно"
+    >
       <span>Должность</span>
     </nz-form-label>
     <nz-form-control [nzSpan]="12" nzErrorTip="Некорректное значение">
@@ -12,10 +21,16 @@
         formControlName="name"
         (nzOnSearch)="onSearch($event)"
       >
-        <ng-container *ngFor="let titleItem of titles$ | async;  trackBy: trackByFn">
-          <nz-option *ngIf="!(isTitleLoad$ | async)" [nzValue]="titleItem" [nzLabel]="titleItem"></nz-option>
+        <ng-container
+          *ngFor="let titleItem of titles$ | async; trackBy: trackByFn"
+        >
+          <nz-option
+            *ngIf="!(isTitleLoad$ | async)"
+            [nzValue]="titleItem"
+            [nzLabel]="titleItem"
+          ></nz-option>
         </ng-container>
-        <nz-option *ngIf="(isTitleLoad$ | async)" nzDisabled nzCustomContent>
+        <nz-option *ngIf="isTitleLoad$ | async" nzDisabled nzCustomContent>
           <i nz-icon nzType="loading" class="loading-icon"></i> Сейчас найдем...
         </nz-option>
       </nz-select>
@@ -23,24 +38,29 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="12" nzFor="vacancyOwner">Владелец вакансии</nz-form-label>
+    <nz-form-label nzFor="experience">
+      <span>Требуемый опыт</span>
+    </nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <input nz-input id="vacancyOwner" formControlName="vacancyOwner" placeholder="Укажите владельца вакансии" />
+      <nz-select
+        id="experience"
+        formControlName="experience"
+        nzPlaceHolder="Выберете значение"
+      >
+        <nz-option
+          *ngFor="let option of experienceOptions"
+          [nzLabel]="option.title"
+          [nzValue]="option.value"
+        ></nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label [nzSpan]="12" nzFor="vacancyNumber">Номер вакансии</nz-form-label>
+    <nz-form-label [nzSpan]="12" nzFor="salaryFrom"
+      >Заработная плата от</nz-form-label
+    >
     <nz-form-control [nzSpan]="12">
-      <input nz-input id="vacancyNumber" formControlName="vacancyNumber" placeholder="№" />
-    </nz-form-control>
-  </nz-form-item>
-
-
-
-  <nz-form-item>
-    <nz-form-label  [nzSpan]="12"  nzFor="salaryFrom">Заработная плата от</nz-form-label>
-    <nz-form-control  [nzSpan]="12" >
       <nz-input-number
         style="width: 100%"
         id="salaryFrom"
@@ -56,8 +76,10 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label  [nzSpan]="12"  nzFor="salaryTo">Заработная плата до</nz-form-label>
-    <nz-form-control  [nzSpan]="12" >
+    <nz-form-label [nzSpan]="12" nzFor="salaryTo"
+      >Заработная плата до</nz-form-label
+    >
+    <nz-form-control [nzSpan]="12">
       <nz-input-number
         style="width: 100%"
         id="salaryTo"
@@ -78,10 +100,15 @@
       <span>Навыки</span>
     </nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <nz-select formControlName="keySkills" nzMode="tags" nzPlaceHolder="Please select">
-        <nz-option *ngFor="let option of keySkillOptions"
-                   [nzLabel]="option"
-                   [nzValue]="option"
+      <nz-select
+        formControlName="keySkills"
+        nzMode="tags"
+        nzPlaceHolder="Начните вводить значения"
+      >
+        <nz-option
+          *ngFor="let option of keySkillOptions"
+          [nzLabel]="option"
+          [nzValue]="option"
         ></nz-option>
       </nz-select>
     </nz-form-control>
@@ -90,14 +117,51 @@
   <nz-form-item>
     <nz-form-label>Обязанности</nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <textarea formControlName="description" nz-input rows="2" placeholder="write any thing"></textarea>
+      <textarea
+        [nzAutosize]="{ minRows: 6 }"
+        formControlName="description"
+        nz-input
+        rows="2"
+        placeholder="Опишите обязанности"
+      ></textarea>
     </nz-form-control>
   </nz-form-item>
 
   <h3>Дополнительные требования</h3>
   <nz-form-item>
     <nz-form-control [nzSpan]="12">
-      <label nz-checkbox formControlName="description">Профильное образование обязательно</label>
+      <label nz-checkbox formControlName="description"
+        >Профильное образование обязательно</label
+      >
+    </nz-form-control>
+  </nz-form-item>
+
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="12" nzFor="vacancyOwner"
+    >Владелец вакансии</nz-form-label
+    >
+    <nz-form-control [nzSpan]="12">
+      <input
+        nz-input
+        id="vacancyOwner"
+        formControlName="vacancyOwner"
+        placeholder="Укажите владельца вакансии"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="12" nzFor="vacancyNumber"
+    >Номер вакансии</nz-form-label
+    >
+    <nz-form-control [nzSpan]="12">
+      <input
+        nz-input
+        id="vacancyNumber"
+        formControlName="vacancyNumber"
+        placeholder="№"
+      />
     </nz-form-control>
   </nz-form-item>
 

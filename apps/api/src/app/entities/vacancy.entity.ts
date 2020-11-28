@@ -1,13 +1,8 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
-import { BaseEntity } from './base.entity';
-import {
-  ExperienceEnum,
-  ScheduleEnum,
-  Vacancy,
-} from '@meteora/api-interfaces';
+import { ExperienceEnum, ScheduleEnum, Specialization, Vacancy } from '@meteora/api-interfaces';
 import { ApiProperty } from '@nestjs/swagger';
+import { Column, Entity } from 'typeorm';
 import { CommonService } from '../services/common/common.service';
-import { SpecializationEntity } from './specialization.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'vacancies' })
 export class VacancyEntity extends BaseEntity implements Vacancy {
@@ -84,13 +79,8 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   schedule: ScheduleEnum;
 
   @ApiProperty()
-  @ManyToMany(
-    () => SpecializationEntity,
-    (specialization) => specialization.vacancies,
-    { nullable: true, onDelete: 'SET NULL' }
-  )
-  @JoinTable()
-  specialization: SpecializationEntity[];
+  @Column('jsonb', { default: '[]' })
+  specialization: Specialization[];
 
   @ApiProperty()
   @Column()
