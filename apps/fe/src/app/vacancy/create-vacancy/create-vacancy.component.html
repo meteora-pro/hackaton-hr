@@ -66,6 +66,13 @@
       <label nz-checkbox formControlName="description">Профильное образование обязательно</label>
     </nz-form-control>
   </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="8">
+      <button nz-button nzType="primary">Опубликовать</button>
+      <button nz-button>Отмена</button>
+    </nz-form-control>
+  </nz-form-item>
 </form>
 <pre>
   {{ formGroup.value | json }}
