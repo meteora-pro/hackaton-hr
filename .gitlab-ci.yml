@@ -136,3 +136,46 @@ increment-version-fe:
     - git pull origin master
     - git push $CI_REPOSITORY_URL HEAD:master
     - echo $(git push --tags $CI_REPOSITORY_URL HEAD:$CI_COMMIT_REF_NAME) || true
+
+########################################
+#                BUILD                 #
+########################################
+.build: &build
+  image: andreymaznyak/docker-git-perl:latest
+  stage: build
+  variables:
+    GIT_STRATEGY: clone
+  services:
+    - docker:18.09.7-dind
+  before_script:
+    - echo "registry=$NPM_REGISTRY" > .npmrc
+# master
+build-image-api:
+  <<: *build
+  <<: *only-api-tags
+  script:
+    - export PROJECT_VERSION=api-$(cat apps/api/version)
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -f deploy/api/Dockerfile -t $CI_REGISTRY_IMAGE:$PROJECT_VERSION -t $CI_REGISTRY_IMAGE:api-latest .
+    - docker push $CI_REGISTRY_IMAGE:$PROJECT_VERSION
+    - docker push $CI_REGISTRY_IMAGE:api-latest
+
+# master
+build-image-fe:
+  <<: *build
+  <<: *only-fe-tags
+  script:
+    - export PROJECT_VERSION=fe-$(cat apps/fe/version)
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build  -f deploy/fe/Dockerfile -t $CI_REGISTRY_IMAGE:$PROJECT_VERSION -t $CI_REGISTRY_IMAGE:fe-latest .
+    - docker push $CI_REGISTRY_IMAGE:$PROJECT_VERSION
+    - docker push $CI_REGISTRY_IMAGE:fe-latest
+
+build-review-fe:
+  <<: *build
+  <<: *branches-fe
+  script:
+    - export PROJECT_VERSION=fe-$CI_BUILD_REF_SLUG
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build  -f deploy/fe/Dockerfile -t $CI_REGISTRY_IMAGE:$PROJECT_VERSION .
+    - docker push $CI_REGISTRY_IMAGE:$PROJECT_VERSION
