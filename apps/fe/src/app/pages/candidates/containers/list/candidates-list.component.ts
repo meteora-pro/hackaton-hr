@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Candidate } from '@meteora/api-interfaces';
-import { LoadCandidates } from '../store/candidates.actions';
+import { LoadCandidates } from '../../store/candidates.actions';
 
 @Component({
   selector: 'meteora-candidates-list',

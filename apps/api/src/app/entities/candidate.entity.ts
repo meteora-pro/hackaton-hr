@@ -12,6 +12,14 @@ export class CandidateEntity extends BaseEntity implements Candidate {
 
   @ApiProperty()
   @Column()
+  fullName: string;
+
+  @ApiProperty()
+  @Column()
+  phone: string;
+
+  @ApiProperty()
+  @Column()
   about: string;
 
   @ApiProperty()
