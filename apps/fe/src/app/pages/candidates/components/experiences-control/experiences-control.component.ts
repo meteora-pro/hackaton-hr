@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Experience } from '@meteora/api-interfaces';
 
@@ -16,8 +16,6 @@ import { Experience } from '@meteora/api-interfaces';
   ]
 })
 export class ExperiencesControlComponent implements ControlValueAccessor {
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   experiences: Experience[] = [];
 
@@ -41,15 +39,15 @@ export class ExperiencesControlComponent implements ControlValueAccessor {
 
   emitEvent() {
     this.onChange(this.experiences);
+    this.experiences = [...this.experiences];
   }
 
   add() {
-    this.experiences.push({
+    this.experiences = [...this.experiences, {
       start: null,
       end: null,
       position: null,
       description: null,
-    });
-    this.cdr.markForCheck();
+    }];
   }
 }

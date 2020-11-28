@@ -15,10 +15,11 @@ import { VacancyState } from './store/vacancy.state';
 import { NgxsModule } from '@ngxs/store';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { VacanciesRoutingModule } from './vacancies-routing.module';
+import { VacancyCardComponent } from './vacancy-card/vacancy-card.component';
 
 
 @NgModule({
-  declarations: [CreateVacancyComponent, VacanciesListComponent],
+  declarations: [CreateVacancyComponent, VacanciesListComponent, VacancyCardComponent],
   imports: [
     CommonModule,
     NgxsModule.forFeature([VacancyState]),

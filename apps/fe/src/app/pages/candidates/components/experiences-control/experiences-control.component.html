@@ -16,10 +16,12 @@
     <nz-form-label>
       <span>Начало работы</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <nz-date-picker [nzFormat]="'dd.MM.yyyy'"
+    <nz-form-control [nzSpan]="24">
+      <nz-date-picker [nzFormat]="'MM.yyyy'"
+                      nzMode="month"
                       [(ngModel)]="item.start"
-                      (ngModelChange)="emitEvent()"></nz-date-picker>
+                      (ngModelChange)="emitEvent()">
+      </nz-date-picker>
     </nz-form-control>
   </nz-form-item>
 
@@ -27,8 +29,9 @@
     <nz-form-label>
       <span>Окончание</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12">
-      <nz-date-picker [nzFormat]="'dd.MM.yyyy'"
+    <nz-form-control [nzSpan]="24">
+      <nz-date-picker [nzFormat]="'MM.yyyy'"
+                      nzMode="month"
                       [(ngModel)]="item.end"
                       (ngModelChange)="emitEvent()"
       ></nz-date-picker>
