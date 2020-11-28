@@ -6,7 +6,6 @@ import { NgxsModule } from '@ngxs/store';
 
 import { CandidatesRoutingModule } from './candidates-routing.module';
 import { CandidatesListComponent } from './containers/list/candidates-list.component';
-import { CandidateCardComponent } from './containers/card/candidate-card.component';
 import { CandidatesState } from './store/candidates.state';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { HttpClientModule } from '@angular/common/http';
@@ -50,7 +49,6 @@ import { SharedModule } from '../../shared/shared.module';
   ],
   declarations: [
     CandidatesListComponent,
-    CandidateCardComponent,
     CandidateFormComponent,
     CreateCandidateComponent,
     ExperiencesControlComponent

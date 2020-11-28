@@ -11,7 +11,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let item of table.data">
-    <td>{{ item.title }}</td>
+    <td><a [routerLink]="['/candidate', item.id]">{{ item.title }}</a></td>
     <td>{{ item.experiences | workExperienceYears }}</td>
     <td>{{ item.experiences | lastWork }}</td>
     <td>

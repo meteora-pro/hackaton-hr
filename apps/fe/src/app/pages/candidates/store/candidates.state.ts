@@ -64,4 +64,5 @@ export class CandidatesState {
   public createCandidates(ctx: Ctx, { candidate }: CreateCandidates) {
     return this.nestCrudService.addItem('candidate', candidate);
   }
+
 }
