@@ -42,23 +42,23 @@ export class CreateVacancyComponent implements OnInit, OnDestroy {
     value: ExperienceEnum;
   }[] = [
     {
-      title: 'Без опыта',
+      title: 'Intern',
       value: ExperienceEnum.NO_EXPERIENCE,
     },
     {
-      title: 'До года',
+      title: 'Junior',
       value: ExperienceEnum.FROM_0_TO_1,
     },
     {
-      title: 'От 1 до 3 лет',
+      title: 'Middle',
       value: ExperienceEnum.FROM_1_TO_3,
     },
     {
-      title: 'От 3 до 5 лет',
+      title: 'Senior',
       value: ExperienceEnum.FROM_3_TO_5,
     },
     {
-      title: 'Более 5 лет',
+      title: 'Lead',
       value: ExperienceEnum.FROM_5,
     },
   ];
