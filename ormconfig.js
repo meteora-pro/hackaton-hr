@@ -9,7 +9,7 @@ module.exports = [
     password: process.env.POSTGRES_PASSWORD || "ilt0q1drzye",
     database: process.env.DB_NAME || "local_api",
     logging: false,
-    dropSchema: true,
+    dropSchema: false,
     entities: [
       "apps/api/src/app/**/*.entity.ts",
     ],
