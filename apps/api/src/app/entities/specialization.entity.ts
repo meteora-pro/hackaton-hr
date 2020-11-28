@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany, PrimaryColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Specialization } from '@meteora/api-interfaces';
 import { ApiProperty } from '@nestjs/swagger';

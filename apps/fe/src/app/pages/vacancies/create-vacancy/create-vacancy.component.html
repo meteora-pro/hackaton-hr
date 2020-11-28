@@ -1,10 +1,9 @@
 <form nz-form nzLayout="vertical" [formGroup]="formGroup" (ngSubmit)="submitForm()">
   <nz-form-item>
-
-    <nz-form-label nzFor="nickname" nzRequired nzTooltipTitle="What do you want other to call you">
+    <nz-form-label nzFor="nickname" nzRequired nzTooltipTitle="Начните писать требуемую должность чтобы найти то, что нужно">
       <span>Должность</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your nickname!">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Некорректное значение">
       <nz-select
         nzMode="default"
         nzPlaceHolder="Начните вводить значения"
@@ -13,21 +12,37 @@
         formControlName="name"
         (nzOnSearch)="onSearch($event)"
       >
-        <ng-container *ngFor="let o of optionList">
-          <nz-option *ngIf="!isLoading" [nzValue]="o" [nzLabel]="o"></nz-option>
+        <ng-container *ngFor="let titleItem of titles$ | async;  trackBy: trackByFn">
+          <nz-option *ngIf="!(isTitleLoad$ | async)" [nzValue]="titleItem" [nzLabel]="titleItem"></nz-option>
         </ng-container>
-        <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+        <nz-option *ngIf="(isTitleLoad$ | async)" nzDisabled nzCustomContent>
           <i nz-icon nzType="loading" class="loading-icon"></i> Сейчас найдем...
         </nz-option>
       </nz-select>
     </nz-form-control>
   </nz-form-item>
+
   <nz-form-item>
-    <nz-form-label nzFor="salaryFrom">
-      <span>Зарплата</span>
-    </nz-form-label>
+    <nz-form-label [nzSpan]="12" nzFor="vacancyOwner">Владелец вакансии</nz-form-label>
     <nz-form-control [nzSpan]="12">
+      <input nz-input id="vacancyOwner" formControlName="vacancyOwner" placeholder="Укажите владельца вакансии" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="12" nzFor="vacancyNumber">Номер вакансии</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input nz-input id="vacancyNumber" formControlName="vacancyNumber" placeholder="№" />
+    </nz-form-control>
+  </nz-form-item>
+
+
+
+  <nz-form-item>
+    <nz-form-label  [nzSpan]="12"  nzFor="salaryFrom">Заработная плата от</nz-form-label>
+    <nz-form-control  [nzSpan]="12" >
       <nz-input-number
+        style="width: 100%"
         id="salaryFrom"
         formControlName="salaryFrom"
         nzPlaceHolder="от"
@@ -37,7 +52,15 @@
         [nzFormatter]="formatterCurrency"
         [nzParser]="parserCurrency"
       ></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label  [nzSpan]="12"  nzFor="salaryTo">Заработная плата до</nz-form-label>
+    <nz-form-control  [nzSpan]="12" >
       <nz-input-number
+        style="width: 100%"
+        id="salaryTo"
         formControlName="salaryTo"
         nzPlaceHolder="до"
         [nzMin]="1"

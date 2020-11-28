@@ -27,7 +27,7 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   area: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   birthDate: Date;
 
   @ApiProperty({
@@ -69,7 +69,7 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   @ManyToMany(
     () => SpecializationEntity,
     (specialization) => specialization.candidates,
-    { nullable: true, onDelete: 'SET NULL' }
+    { nullable: true, onDelete: 'SET NULL', persistence: true }
   )
   @JoinTable()
   specialization: SpecializationEntity[];
