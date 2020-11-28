@@ -11,6 +11,10 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ScoringModalComponent } from './scoring-modal/scoring-modal.component';
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzTypographyModule } from 'ng-zorro-antd/typography';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 const routes: Routes = [
   {
@@ -28,7 +32,11 @@ const routes: Routes = [
     SharedModule,
     NzProgressModule,
     NzButtonModule,
-    NzModalModule
+    NzModalModule,
+    NzGridModule,
+    NzTagModule,
+    NzTypographyModule,
+    NzIconModule
   ],
   declarations: [VacancyCardComponent, CandidateScoringListComponent, ScoringModalComponent],
 })

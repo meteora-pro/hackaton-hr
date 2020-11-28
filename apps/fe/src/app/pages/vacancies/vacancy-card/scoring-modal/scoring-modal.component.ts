@@ -11,7 +11,7 @@ export class ScoringModalComponent implements OnInit {
 
   constructor(private modal: NzModalRef) { }
 
-  @Input() scoring: CandidateScoring;
+  @Input() candidateScoring: CandidateScoring;
 
   ngOnInit(): void {
   }
