@@ -1,1 +1,72 @@
-<p>create-vacancy works!</p>
+<form nz-form nzLayout="vertical" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label nzFor="nickname" nzRequired nzTooltipTitle="What do you want other to call you">
+      <span>Должность</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your nickname!">
+      <input placeholder="Должность"
+             nz-input
+             id="nickname" formControlName="name"
+             [nzAutocomplete]="auto" />
+      <nz-autocomplete [nzDataSource]="filteredOptions" #auto></nz-autocomplete>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="salaryFrom">
+      <span>Зарплата</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-input-number
+        id="salaryFrom"
+        formControlName="salaryFrom"
+        nzPlaceHolder="от"
+        [nzMin]="1"
+        [nzMax]="999999999"
+        [nzStep]="5000"
+        [nzFormatter]="formatterCurrency"
+        [nzParser]="parserCurrency"
+      ></nz-input-number>
+      <nz-input-number
+        formControlName="salaryTo"
+        nzPlaceHolder="до"
+        [nzMin]="1"
+        [nzMax]="999999999"
+        [nzStep]="5000"
+        [nzFormatter]="formatterCurrency"
+        [nzParser]="parserCurrency"
+      ></nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+
+  <h3>Навыки и обязанности</h3>
+  <nz-form-item>
+    <nz-form-label nzFor="nickname">
+      <span>Навыки</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select formControlName="keySkills" nzMode="tags" nzPlaceHolder="Please select">
+        <nz-option *ngFor="let option of keySkillOptions"
+                   [nzLabel]="option"
+                   [nzValue]="option"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Обязанности</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea formControlName="description" nz-input rows="2" placeholder="write any thing"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <h3>Дополнительные требования</h3>
+  <nz-form-item>
+    <nz-form-control [nzSpan]="12">
+      <label nz-checkbox formControlName="description">Профильное образование обязательно</label>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<pre>
+  {{ formGroup.value | json }}
+</pre>
