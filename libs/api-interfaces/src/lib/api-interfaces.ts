@@ -1,17 +1,10 @@
-export enum VacancyStatusEnum {
-  DRAFT = 'DRAFT',
-  READY = 'READY',
-  PUBLISHED = 'PUBLISHED',
-  WITHDRAWN = 'WITHDRAWN',
-  CLOSED = 'PUBLISHED'
-}
 
 export enum ScheduleEnum {
   FULL_DAY = 'FULL_DAY',
   PART_TIME = 'PART_TIME'
 }
 
-export enum experienceEnum {
+export enum ExperienceEnum {
   NO_EXPERIENCE = 'NO_EXPERIENCE',
   FROM_0_TO_1 = 'FROM_0_TO_1',
   FROM_1_TO_3 = 'FROM_1_TO_3',
@@ -75,13 +68,12 @@ export interface Experience {
 export interface Vacancy {
   readonly id: number;
   name: string;
-  status: VacancyStatusEnum;
   responseLetterRequired: boolean;
   areaName?: string; // справочник из hh
   address?: string;
   salaryFrom: number;
   specialization: Specialization;
-  experience: experienceEnum;
+  experience: ExperienceEnum;
   salaryTo: number;
   salaryGross: boolean;
   schedule: ScheduleEnum;
