@@ -6,7 +6,7 @@ import { NgxsModule } from '@ngxs/store';
 
 import { CandidatesRoutingModule } from './candidates-routing.module';
 import { CandidatesListComponent } from './containers/list/candidates-list.component';
-import { CandidateCardComponent } from './card/candidate-card.component';
+import { CandidateCardComponent } from './containers/card/candidate-card.component';
 import { CandidatesState } from './store/candidates.state';
 import { WorkExperienceYearsPipe } from './pipes/work-experience-years.pipe';
 import { NzTagModule } from 'ng-zorro-antd/tag';
@@ -47,6 +47,13 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzCardModule,
     NzIconModule,
   ],
-  declarations: [CandidatesListComponent, CandidateCardComponent, WorkExperienceYearsPipe, CandidateFormComponent, CreateCandidateComponent, ExperiencesControlComponent],
+  declarations: [
+    CandidatesListComponent,
+    CandidateCardComponent,
+    WorkExperienceYearsPipe,
+    CandidateFormComponent,
+    CreateCandidateComponent,
+    ExperiencesControlComponent
+  ],
 })
 export class CandidatesModule { }

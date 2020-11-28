@@ -10,7 +10,7 @@ import { allMigrations } from './migrations/all.migrations';
 
 @Injectable()
 export class AppConfig {
-  static runtimeEnv = process.env.NODE_ENV || 'development';
+  static runtimeEnv = process.env.NODE_ENV === 'development' ?  'staging' : process.env.NODE_ENV;
   static release = packageJson.version as string;
   static debug = AppConfig.runtimeEnv === 'development';
   constructor(
