@@ -1,8 +1,38 @@
 <ng-container *ngIf="vacancy$ | async as vacancy; else loadingTmpl">
-  <h1>{{ vacancy.name }}</h1>
-  <p>
-    {{ vacancy.description }}
-  </p>
+  <div nz-row>
+    <div nz-col nzSpan="10">
+      <h1>{{ vacancy.name }}</h1>
+      <p>
+        Заработная плата <b>{{ { start: vacancy.salaryFrom | number, to: vacancy.salaryTo | number } | salaryRange}}</b>
+      </p>
+    </div>
+    <div nz-col nzSpan="2">
+    </div>
+    <div nz-col nzSpan="12" style="text-align: right"
+         nz-typography
+         nzType="secondary">
+      <p>№ {{ vacancy.vacancyNumber }}</p>
+      <p>{{ vacancy.vacancyOwner }}</p>
+    </div>
+  </div>
+  <br>
+  <div nz-row>
+    <div nz-col nzSpan="10">
+      <h3>Чем предстоит заниматься</h3>
+      <p>
+        {{ vacancy.description }}
+      </p>
+    </div>
+    <div nz-col nzSpan="2">
+    </div>
+    <div nz-col nzSpan="12">
+      <h3>Ключевые навыки</h3>
+      <nz-tag *ngFor="let skill of vacancy.keySkills" [nzColor]="'blue'">
+        {{ skill }}
+      </nz-tag>
+    </div>
+  </div>
+  <br>
 
   <h2>Подходящие кандидаты</h2>
 

@@ -22,7 +22,7 @@
         {{ item.candidate?.title }}
       </td>
       <td>{{ item.candidate?.experiences | workExperienceYears }}</td>
-      <td>TODO</td>
+      <td>{{ item.candidate?.experiences | lastWork }}</td>
       <td>
         <nz-progress [nzPercent]="item.scoring?.percent | number:'1.0-0'"
                      nzType="circle"
