@@ -1,10 +1,19 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
-import { Observable } from 'rxjs';
+import { LoadSkills, LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
+import { Observable, Subject } from 'rxjs';
 import { VacancyConstructorState } from '../store/constructor-state/vacancy-constructor.state';
 import { ExperienceEnum } from '@meteora/api-interfaces';
+import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
+
+import isEqual from 'lodash-es/isEqual';
+
 
 @Component({
   selector: 'meteora-create-vacancy',
@@ -12,7 +21,7 @@ import { ExperienceEnum } from '@meteora/api-interfaces';
   styleUrls: ['./create-vacancy.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateVacancyComponent implements OnInit {
+export class CreateVacancyComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private store: Store) {}
   formGroup = this.fb.group({
     name: '',
@@ -25,6 +34,8 @@ export class CreateVacancyComponent implements OnInit {
     description: null,
   });
   keySkillOptions = ['React', 'Angular'];
+
+  private destroy$ = new Subject();
 
   public readonly experienceOptions: {
     title: string;
@@ -63,15 +74,39 @@ export class CreateVacancyComponent implements OnInit {
   @Select(VacancyConstructorState.isTitleLoad)
   public isTitleLoad$: Observable<boolean>;
 
+
+  @Select(VacancyConstructorState.skills)
+  public skills$: Observable<string[]>;
+
+  @Select(VacancyConstructorState.isSkillsLoad)
+  public isSkillsLoad$: Observable<boolean>;
+
   public trackByFn(value) {
     return value;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.formChangeObserver();
+  }
 
   submitForm() {}
 
   onSearch(searchValue: string): void {
     this.store.dispatch(new LoadVacancyTitles(searchValue));
+  }
+
+  private formChangeObserver() {
+    this.formGroup.valueChanges.pipe(
+      takeUntil(this.destroy$),
+      map(formValue => ({name: formValue.name, experience: formValue.experience})),
+      distinctUntilChanged(isEqual),
+      filter(({ name, experience }) => !!name && !!experience),
+      tap(({ name, experience }) => this.store.dispatch(new LoadSkills(name, experience)))
+    ).subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
