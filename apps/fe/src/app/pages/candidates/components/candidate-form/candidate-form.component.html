@@ -60,18 +60,30 @@
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>
-    <nz-form-label nzFor="nickname">
+    <nz-form-label nzFor="title">
+      <span>Должность</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input placeholder="Должность"
+             nz-input
+             id="title"
+             formControlName="title"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="skillSet">
       <span>Навыки</span>
     </nz-form-label>
     <nz-form-control [nzSpan]="12">
-      <nz-select formControlName="keySkills" nzMode="tags" nzPlaceHolder="Please select">
+      <nz-select formControlName="skillSet" nzMode="tags" nzPlaceHolder="Please select">
         <nz-option *ngFor="let option of keySkillOptions"
                    [nzLabel]="option"
                    [nzValue]="option"
         ></nz-option>
       </nz-select>
     </nz-form-control>
-
   </nz-form-item>
 
   <nz-form-item>
@@ -83,7 +95,7 @@
 
   <h3>Опыт</h3>
   <nz-form-item>
-  <experiences-control formControlName="experience"></experiences-control>
+  <experiences-control formControlName="experiences"></experiences-control>
   </nz-form-item>
 
   <nz-form-item>
@@ -92,6 +104,7 @@
       <button nz-button>Отмена</button>
     </nz-form-control>
   </nz-form-item>
+
 </form>
 <pre>
   {{ formGroup.value | json }}

@@ -22,16 +22,28 @@ export class CandidateFormComponent implements OnInit {
   formGroup: FormGroup;
   keySkillOptions = ['React', 'Angular'];
 
+  educationLevelList = [
+    {value: 'SECONDARY', title: ''},
+    {value: 'SPECIAL_SECONDARY', title: ''},
+    {value: 'UNFINISHED_HIGHER', title: 'Незаконченное высшее'},
+    {value: 'HIGHER', title: 'Высшее'},
+    {value: 'BACHELOR', title: 'Бакавриат'},
+    {value: 'MASTER', title: 'Магистр'},
+    {value: 'CANDIDATE', title: 'Кандидат наук'},
+    {value: 'DOCTOR', title: 'Доктор'}
+  ];
+
   ngOnInit(): void {
     const defaultForm = {
       fullName: '',
       phone: null,
       birthDate: null,
-      keySkills: [],
-      experience: [],
+      skillSet: [],
+      experiences: [],
       area: null,
       about: null,
       gender: null,
+      title: null,
     };
     this.formGroup = this.fb.group({
       ...defaultForm,

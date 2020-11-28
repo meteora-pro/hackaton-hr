@@ -34,9 +34,8 @@ export class CandidateEntity extends BaseEntity implements Candidate {
     enum: CommonService.enumToArray(EducationLevelEnum),
     example: EducationLevelEnum.HIGHER,
   })
-  @Column({ type: 'enum', enum: EducationLevelEnum })
+  @Column({ type: 'enum', enum: EducationLevelEnum, nullable: true })
   educationLevel: EducationLevelEnum;
-
 
   @ApiProperty()
   @Column('jsonb', { nullable: false, default: '{}' })
@@ -55,7 +54,7 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   languages: Language[];
 
   @ApiProperty()
-  @Column()
+  @Column({nullable: true})
   salary: number;
 
   @ApiProperty()
@@ -63,9 +62,8 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   skillSet: string[];
 
   @ApiProperty()
-  @Column()
+  @Column({nullable: true})
   skills: string;
-
 
   @ApiProperty()
   @ManyToMany(
