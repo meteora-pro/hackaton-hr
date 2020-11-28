@@ -22,7 +22,7 @@ export class NestCrudService<T extends {id: string|number}> {
    * RequestQueryBuilder docs:
    * https://github.com/nestjsx/crud/wiki/Requests#frontend-usage
    */
-  getEntities(
+  getEntities<T>(
     entityName: string,
     queryParams: CreateQueryParams,
   ): Observable<NestPaginationResponse<T>> {

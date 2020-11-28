@@ -1,0 +1,36 @@
+<ng-container *ngIf="pagination$ | async as pagination">
+  <nz-table #table
+            [nzData]="pagination.data"
+            (nzPageIndexChange)="handleChangePage($event)"
+            [nzPageSize]="perPage$ | async"
+            [nzPageIndex]="pagination.page"
+            [nzFrontPagination]="false"
+            [nzLoading]="isLoadingPagination$ | async"
+            [nzTotal]="pagination.total">
+    <thead>
+    <tr>
+      <th>Должность</th>
+      <th>Опыт работы</th>
+      <th>Последнее место работы</th>
+      <th>Соответствие вакансии</th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of table.data">
+      <td>
+        {{ item.candidate?.title }}
+      </td>
+      <td>{{ item.candidate?.experiences | workExperienceYears }}</td>
+      <td>TODO</td>
+      <td>
+        <nz-progress [nzPercent]="75" nzType="circle" [nzWidth]="80"></nz-progress>
+      </td>
+      <td>
+        <button nz-button nzType="default">Отчет</button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+
+</ng-container>
