@@ -3,6 +3,9 @@
             [nzData]="pagination.data"
             (nzPageIndexChange)="handleChangePage($event)"
             [nzPageSize]="perPage$ | async"
+            [nzPageIndex]="pagination.page"
+            [nzFrontPagination]="false"
+            [nzLoading]="isLoading$ | async"
             [nzTotal]="pagination.total">
     <thead>
     <tr>

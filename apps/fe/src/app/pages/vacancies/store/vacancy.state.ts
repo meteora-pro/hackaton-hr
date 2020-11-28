@@ -1,4 +1,4 @@
-import { State, Action, Selector, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { CreateVacancy, LoadVacancies, LoadVacancyCard } from './vacancy.actions';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { Vacancy } from '@meteora/api-interfaces';
@@ -36,6 +36,11 @@ type Ctx = StateContext<VacancyStateModel>;
 export class VacancyState {
 
   constructor(private nestCrudService: NestCrudService<Vacancy>) {
+  }
+
+  @Selector()
+  public static isLoading(state: VacancyStateModel) {
+    return state.status === StoreStatus.Loading;
   }
 
   @Selector()

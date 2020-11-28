@@ -22,6 +22,9 @@ export class VacanciesListComponent implements OnInit {
   @Select(VacancyState.perPage)
   perPage$: Observable<number>;
 
+  @Select(VacancyState.isLoading)
+  isLoading$: Observable<boolean>;
+
   ngOnInit(): void {
     this.store.dispatch(new LoadVacancies(0))
   }
