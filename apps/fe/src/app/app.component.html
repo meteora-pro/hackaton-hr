@@ -3,6 +3,7 @@
             nzCollapsible
             nzWidth="256px"
             nzBreakpoint="md"
+            nzTheme="light"
             [(nzCollapsed)]="isCollapsed"
             [nzTrigger]="null">
     <div class="sidebar-logo">
@@ -11,29 +12,11 @@
         <h1>Hunt U</h1>
       </a>
     </div>
-    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Вакансии" nzIcon="audit">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/vacancies/create">Конструктор</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/vacancies" [queryParams]="{active: true}">Активные</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/vacancies/list" [queryParams]="{archive: true}">Архивные</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Кандидаты" nzIcon="team">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/candidates/list" [queryParams]="{archive: true}">Кандидаты</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/candidates/create" [queryParams]="{active: true}">Добавить кандидата</a>
-          </li>
-        </ul>
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li *ngFor="let item of navList"
+          nz-menu-item>
+        <i nz-icon [nzType]="item.icon"></i>
+        <a [routerLink]="item.link" routerLinkActive="active">{{ item.title }}</a>
       </li>
     </ul>
   </nz-sider>

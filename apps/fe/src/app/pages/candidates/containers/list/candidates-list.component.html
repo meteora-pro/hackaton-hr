@@ -3,19 +3,19 @@
   <thead>
   <tr>
     <th>Должность</th>
-    <th>Опыт работы</th>
-    <th>Последнее место работы</th>
+    <th style="min-width: 150px">Опыт работы</th>
+    <th style="min-width: 230px">Последнее место работы</th>
     <th>Ключевые навыки</th>
-    <th>Зарплата</th>
+    <th style="min-width: 230px">Зарплата</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let item of table.data">
     <td>{{ item.title }}</td>
     <td>{{ item.experiences | workExperienceYears }}</td>
-    <td>{{ item.experiences[item.experiences.length - 1]?.position || '-'}}</td>
+    <td>{{ item.experiences | lastWork }}</td>
     <td>
-      <nz-tag *ngFor="let skill of item.skillSet" [nzColor]="'magenta'">
+      <nz-tag *ngFor="let skill of item.skillSet.slice(0, 10)" [nzColor]="'blue'" [title]="skill">
         {{ skill }}
       </nz-tag>
     </td>

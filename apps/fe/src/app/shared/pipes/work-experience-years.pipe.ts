@@ -37,6 +37,7 @@ export class WorkExperienceYearsPipe implements PipeTransform {
       this.plural.transform(years, {
         '=0': '',
         one: '# год',
+        '=3': '# года',
         few: '# года',
         many: '# лет',
         other: '# года',
