@@ -19,6 +19,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { VacancyCardState } from './vacancy-card/vacancy-card.state';
 import { VacancyConstructorState } from './store/constructor-state/vacancy-constructor.state';
 import { PredictorService } from './services/predictor.service';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { PredictorService } from './services/predictor.service';
     NzTableModule,
     VacanciesRoutingModule,
     NzIconModule,
+    SharedModule,
   ],
   declarations: [CreateVacancyComponent, VacanciesListComponent],
   providers: [PredictorService],
