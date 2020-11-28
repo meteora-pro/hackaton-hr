@@ -1,5 +1,5 @@
 import { State, Action, Selector, StateContext } from '@ngxs/store';
-import { CreateVacancy, LoadVacancies } from './vacancy.actions';
+import { CreateVacancy, LoadVacancies, LoadVacancyCard } from './vacancy.actions';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { Vacancy } from '@meteora/api-interfaces';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
@@ -12,6 +12,8 @@ export interface VacancyStateModel {
   pagination: NestPaginationResponse<Vacancy>,
   status: StoreStatus,
   perPage: number;
+  // TODO Вынести в substate
+  currentVacancy: Vacancy;
 }
 
 type Ctx = StateContext<CandidatesStateModel>;
@@ -28,6 +30,7 @@ type Ctx = StateContext<CandidatesStateModel>;
     },
     perPage: 25,
     status: StoreStatus.New,
+    currentVacancy: null,
   }
 })
 @Injectable()
@@ -39,6 +42,11 @@ export class VacancyState {
   @Selector()
   public static vacancies(state: VacancyStateModel) {
     return state.pagination.data;
+  }
+
+  @Selector()
+  public static currentVacancy(state: VacancyStateModel) {
+    return state.currentVacancy;
   }
 
   @Action(LoadVacancies)
@@ -55,6 +63,10 @@ export class VacancyState {
     return this.nestCrudService.getEntities('vacancy', {
       page: page || state.pagination.page,
       limit: state.perPage,
+      sort: {
+        field: 'id',
+        order: 'DESC'
+      }
     }).pipe(
       tap((response: NestPaginationResponse<Vacancy>) => {
         ctx.patchState({
@@ -66,9 +78,18 @@ export class VacancyState {
   }
 
   @Action(CreateVacancy)
-  public add(ctx: StateContext<VacancyStateModel>, { vacancy }: CreateVacancy) {
-    const stateModel = ctx.getState();
-    // stateModel.items = [...stateModel.items, payload];
-    ctx.setState(stateModel);
+  public add(ctx: Ctx, { vacancy }: CreateVacancy) {
+    return this.nestCrudService.addItem('vacancy', vacancy);
+  }
+
+  @Action(LoadVacancyCard)
+  public loadVacancyCard(ctx: Ctx, { id }: LoadVacancyCard) {
+    return this.nestCrudService.getEntityById('vacancy', id).pipe(
+      tap((response: Vacancy) => {
+        ctx.patchState({
+          currentVacancy: response
+        })
+      })
+    );
   }
 }

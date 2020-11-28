@@ -1,0 +1,13 @@
+<ng-container *ngIf="vacancy$ | async as vacancy; else loadingTmpl">
+  <h1>{{ vacancy.name }}</h1>
+  <p>
+    {{ vacancy.description }}
+  </p>
+
+  <h2>Подходящие кандидаты</h2>
+
+</ng-container>
+
+<ng-template #loadingTmpl>
+  Загрузка...
+</ng-template>
