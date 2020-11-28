@@ -45,7 +45,7 @@ stages:
     - master
     - tags
 
-# BACKOFFICE SERVICE
+# FE SERVICE
 .only-fe-changes: &only-fe-changes
   changes:
     - libs/**/*
@@ -179,3 +179,88 @@ build-review-fe:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build  -f deploy/fe/Dockerfile -t $CI_REGISTRY_IMAGE:$PROJECT_VERSION .
     - docker push $CI_REGISTRY_IMAGE:$PROJECT_VERSION
+
+########################################
+#                DEPLOY                #
+########################################
+.deploy: &deploy
+  image: registry.gitlab.com/meteora-pro/secure/it:deploy-kit-helm3
+  stage: deploy
+  variables:
+    KUBECONFIG: /etc/deploy/config
+
+# review
+deploy-on-review-fe:
+  <<: *deploy
+  <<: *branches-fe
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${staging_config} | base64 -d > ${KUBECONFIG}
+  script:
+    # define variable
+    - export PROJECT_VERSION=fe-$CI_BUILD_REF_SLUG
+    - export RELEASE_NAME="fe-review-hackaton-$CI_BUILD_REF_SLUG"
+    - export DEPLOYS=$(helm ls -n hr-hackaton | grep $RELEASE_NAME | wc -l)
+    - cd deploy/fe
+    - if [ ${DEPLOYS}  -eq 0 ]; then echo "fisrt install"; else helm del -n hr-hackaton ${RELEASE_NAME}; fi
+    - helm install -n hr-hackaton --set image.tag=$PROJECT_VERSION --set ingress.tls[0].secretName=review-shelter-fe-$CI_BUILD_REF_SLUG-tls-cert --set ingress.tls[0].hosts[0]=$CI_BUILD_REF_SLUG.dev.meteora.pro --set ingress.hosts[0].host=$CI_BUILD_REF_SLUG.dev.meteora.pro --set ingress.hosts[0].paths[0]="/" ${RELEASE_NAME} .
+  environment:
+    name: review-shelters-fe/$CI_BUILD_REF_NAME
+    url: https://$CI_BUILD_REF_SLUG.dev.meteora.pro/
+    on_stop: stop_review_fe
+
+stop_review_fe:
+  <<: *deploy
+  <<: *branches-fe
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${staging_config} | base64 -d > ${KUBECONFIG}
+    - export PROJECT_VERSION=fe-$CI_BUILD_REF_SLUG
+  script:
+    - export RELEASE_NAME="fe-review-hackaton-$CI_BUILD_REF_SLUG"
+    - export DEPLOYS=$(helm ls -n hr-hackaton | grep $RELEASE_NAME | wc -l)
+    - if [ ${DEPLOYS}  -eq 0 ]; then echo "environments is not started" && exit 1; else helm del -n hr-hackaton ${RELEASE_NAME}; fi
+  when: manual
+  variables:
+    GIT_STRATEGY: none
+  environment:
+    name: review-shelters-fe/$CI_BUILD_REF_NAME
+    action: stop
+
+# staging
+deploy-on-staging-api:
+  <<: *deploy
+  <<: *only-api-tags
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${staging_config} | base64 -d > ${KUBECONFIG}
+  script:
+    # define variable
+    - export OLD_PROJECT_VERSION=v$(egrep -o '[[:digit:]]{1,}\.[[:digit:]]{1,}\.[[:digit:]]{1,}' package.json | head -n1)
+    - export PROJECT_VERSION=api-$(cat apps/api/version)
+    - export RELEASE_NAME="api-hackaton"
+    - export DEPLOYS=$(helm ls -n hr-hackaton | grep $RELEASE_NAME | wc -l)
+    - cd deploy/api
+    - if [ ${DEPLOYS}  -eq 0 ]; then helm install -n hr-hackaton --set image.tag=$PROJECT_VERSION ${RELEASE_NAME} .; else helm upgrade -n hr-hackaton --set image.tag=$PROJECT_VERSION ${RELEASE_NAME} .; fi
+  environment:
+    name: staging-hr-hackaton-api
+    url: https://api-hr-hackaton.dev.meteora.pro/api/version
+
+# staging
+deploy-on-staging-fe:
+  <<: *deploy
+  <<: *only-fe-tags
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${staging_config} | base64 -d > ${KUBECONFIG}
+  script:
+    # define variable
+    - export OLD_PROJECT_VERSION=v$(egrep -o '[[:digit:]]{1,}\.[[:digit:]]{1,}\.[[:digit:]]{1,}' package.json | head -n1)
+    - export PROJECT_VERSION=fe-$(cat apps/fe/version)
+    - export RELEASE_NAME="fe-staging-hackaton"
+    - export DEPLOYS=$(helm ls -n hr-hackaton | grep $RELEASE_NAME | wc -l)
+    - cd deploy/fe
+    - if [ ${DEPLOYS}  -eq 0 ]; then helm install -n hr-hackaton --set image.tag=$PROJECT_VERSION ${RELEASE_NAME} .; else helm upgrade -n hr-hackaton --set image.tag=$PROJECT_VERSION ${RELEASE_NAME} .; fi
+  environment:
+    name: dev-hr-hackaton-fe
+    url: https://lk.dev.meteora.pro
