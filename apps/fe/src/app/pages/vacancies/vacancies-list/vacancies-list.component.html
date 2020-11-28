@@ -21,7 +21,7 @@
       <td>
         <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
       </td>
-      <td>{{ item.experience }}</td>
+      <td>{{ item.experience | needExperience }}</td>
       <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
       <td>
         TODO
