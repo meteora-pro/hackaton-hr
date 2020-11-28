@@ -17,12 +17,14 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { VacanciesRoutingModule } from './vacancies-routing.module';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { VacancyCardState } from './vacancy-card/vacancy-card.state';
+import { VacancyConstructorState } from './store/constructor-state/vacancy-constructor.state';
+import { PredictorService } from './services/predictor.service';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    NgxsModule.forFeature([VacancyState, VacancyCardState]),
+    NgxsModule.forFeature([VacancyState, VacancyConstructorState, VacancyCardState]),
     NzFormModule,
     ReactiveFormsModule,
     NzInputModule,
@@ -33,8 +35,9 @@ import { VacancyCardState } from './vacancy-card/vacancy-card.state';
     NzButtonModule,
     NzTableModule,
     VacanciesRoutingModule,
-    NzIconModule
+    NzIconModule,
   ],
   declarations: [CreateVacancyComponent, VacanciesListComponent],
+  providers: [PredictorService],
 })
 export class VacanciesModule { }

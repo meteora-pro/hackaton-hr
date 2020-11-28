@@ -23,6 +23,15 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   @Column()
   closedAt: Date;
 
+
+  @ApiProperty()
+  @Column({nullable: true})
+  vacancyNumber: string;
+
+  @ApiProperty()
+  @Column({ nullable: true})
+  vacancyOwner: string;
+
   @ApiProperty()
   @Column()
   description: string;

@@ -6,6 +6,7 @@ import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { tap } from 'rxjs/operators';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { Injectable } from '@angular/core';
+import { VacancyConstructorState } from './constructor-state/vacancy-constructor.state';
 import { VacancyCardState } from '../vacancy-card/vacancy-card.state';
 
 export interface VacancyStateModel {
@@ -29,9 +30,7 @@ type Ctx = StateContext<VacancyStateModel>;
     perPage: 10,
     status: StoreStatus.New,
   },
-  children: [
-    VacancyCardState
-  ]
+  children: [VacancyConstructorState, VacancyCardState]
 })
 @Injectable()
 export class VacancyState {
