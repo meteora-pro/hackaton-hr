@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import {
   Candidate, Education, EducationLevelEnum, Experience, Language
@@ -60,12 +60,13 @@ export class CandidateEntity extends BaseEntity implements Candidate {
 
 
   @ApiProperty()
-  @ManyToOne(
+  @ManyToMany(
     () => SpecializationEntity,
     (specialization) => specialization.candidates,
     { nullable: true, onDelete: 'SET NULL' }
   )
-  specialization: SpecializationEntity;
+  @JoinTable()
+  specialization: SpecializationEntity[];
 
   @ApiProperty()
   @Column()
