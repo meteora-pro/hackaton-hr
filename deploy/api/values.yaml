@@ -9,7 +9,8 @@ image:
   tag: api-latest
   pullPolicy: Always
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: gitlab
 nameOverride: ""
 fullnameOverride: ""
 
@@ -35,20 +36,21 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3333
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
   hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - host: api-hr.dev.meteora.pro
+      paths:
+        - '/'
+  tls:
+    - secretName: api-hr-hackaton-dev-meteora-pro-tls
+      hosts:
+        - api-hr.dev.meteora.pro
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

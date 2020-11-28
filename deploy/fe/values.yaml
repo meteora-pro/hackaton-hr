@@ -9,7 +9,8 @@ image:
     tag: fe-latest
   pullPolicy: Always
 
-imagePullSecrets: []
+imagePullSecrets:
+  - name: gitlab
 nameOverride: ""
 fullnameOverride: ""
 
@@ -38,14 +39,19 @@ service:
   port: 80
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
   hosts:
-    - host: chart-example.local
-      paths: []
-  tls: []
+    - host: hr.dev.meteora.pro
+      paths:
+        - '/'
+  tls:
+    - secretName: hr-dev-meteora-pro-tls
+      hosts:
+        - hr.dev.meteora.pro
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
