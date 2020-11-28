@@ -5,6 +5,7 @@ import { importExistData1606574429753 } from './1606574429753-importExistData';
 
 
 import { changeSchema1606587380646 } from './1606587380646-change-schema';
+import { normalizeInitVacancies1606598643604 } from './1606598643604-normalizeInitVacancies';
 
 export const allMigrations = [
   importDataSet1606571179875,
@@ -12,5 +13,6 @@ export const allMigrations = [
   parseFrequencyPredict1606571349242,
   changeSchema1606587380646,
   importExistData1606574429753,
+  normalizeInitVacancies1606598643604,
 ];
 

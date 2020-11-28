@@ -1,7 +1,9 @@
+import { Logger } from '@nestjs/common';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import * as rawDataSet from '../../assets/predict-sources/all_vacancies.json';
 // import * as rawDataSet from '../../assets/predict-sources/vacancies_100_sample.json'
 import { VacanciesPredictEntity } from '../entities/vacancies-predict.entity';
+import { MigrationSlicer } from '../services/migration-slicer';
 
 export class parseVacanciesPredict1606571349242 implements MigrationInterface {
   name = 'vacanciesPredict1606571349246';
@@ -23,7 +25,7 @@ export class parseVacanciesPredict1606571349242 implements MigrationInterface {
     const vacancyRepository = queryRunner.connection.getRepository(
       VacanciesPredictEntity
     );
-
+    const allPredictVacancies = [];
     for (const key of Object.keys(rawDataSet))  {
 
       try {
@@ -36,15 +38,18 @@ export class parseVacanciesPredict1606571349242 implements MigrationInterface {
 
         const skills = sourceVacancy['key_skills'] as {name: string}[];
         vacancyEntity.skills = skills.map(skill => skill.name);
-        console.log('[MIGRATION] work with key', key);
-        await vacancyRepository.insert(vacancyEntity);
+        allPredictVacancies.push(vacancyEntity);
       } catch (e) {
         console.error('[ERROR] error while iterate dataset', e);
       }
     }
 
     try {
-
+      const chunks = MigrationSlicer.sliceData(allPredictVacancies, 100);
+      for ( const [index, chunk] of chunks.entries() ) {
+        Logger.log(`Load ${index} of ${chunks.length} predict vacancies chunk`);
+        await vacancyRepository.insert(chunk);
+      }
       console.log('[MIGRATION] end predict migration');
     } catch (e) {
       console.error('[Insert error] ', e);
