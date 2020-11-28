@@ -80,9 +80,9 @@ export interface Vacancy {
   areaName?: string; // справочник из hh
   address?: string;
   salaryFrom: number;
+  salaryTo: number;
   specialization: Specialization;
   experience: experienceEnum;
-  salaryTo: number;
   salaryGross: boolean;
   schedule: ScheduleEnum;
   description: string;
