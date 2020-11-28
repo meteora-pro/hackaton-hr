@@ -39,11 +39,11 @@ export class CandidateEntity extends BaseEntity implements Candidate {
 
 
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   educations: Education[];
 
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   experiences: Experience[];
 
   @ApiProperty()
@@ -51,7 +51,7 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   gender: "male" | "female";
 
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   languages: Language[];
 
   @ApiProperty()
