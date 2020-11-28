@@ -4,6 +4,7 @@ import { Select, Store } from '@ngxs/store';
 import { LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
 import { Observable } from 'rxjs';
 import { VacancyConstructorState } from '../store/constructor-state/vacancy-constructor.state';
+import { ExperienceEnum } from '@meteora/api-interfaces';
 
 @Component({
   selector: 'meteora-create-vacancy',
@@ -17,12 +18,39 @@ export class CreateVacancyComponent implements OnInit {
     name: '',
     vacancyNumber: null,
     vacancyOwner: null,
+    experience: null,
     salaryFrom: null,
     salaryTo: null,
     keySkills: [],
     description: null,
   });
   keySkillOptions = ['React', 'Angular'];
+
+  public readonly experienceOptions: {
+    title: string;
+    value: ExperienceEnum;
+  }[] = [
+    {
+      title: 'Без опыта',
+      value: ExperienceEnum.NO_EXPERIENCE,
+    },
+    {
+      title: 'До года',
+      value: ExperienceEnum.FROM_0_TO_1,
+    },
+    {
+      title: 'От 1 до 3 лет',
+      value: ExperienceEnum.FROM_1_TO_3,
+    },
+    {
+      title: 'От 3 до 5 лет',
+      value: ExperienceEnum.FROM_3_TO_5,
+    },
+    {
+      title: 'Более 5 лет',
+      value: ExperienceEnum.FROM_5,
+    },
+  ];
 
   formatterCurrency = (value: number) => (value === null ? null : `${value} ₽`);
   parserCurrency = (value: string) => value.replace(' ₽', '');
@@ -34,7 +62,6 @@ export class CreateVacancyComponent implements OnInit {
 
   @Select(VacancyConstructorState.isTitleLoad)
   public isTitleLoad$: Observable<boolean>;
-
 
   public trackByFn(value) {
     return value;

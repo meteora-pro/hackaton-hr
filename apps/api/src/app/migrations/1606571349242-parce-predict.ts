@@ -4,7 +4,7 @@ import * as rawDataSet from '../../assets/predict-sources/all_vacancies.json';
 import { VacanciesPredictEntity } from '../entities/vacancies-predict.entity';
 
 export class parseVacanciesPredict1606571349242 implements MigrationInterface {
-  name = 'vacanciesPredict1606571349242';
+  name = 'vacanciesPredict1606571349246';
 
   public normalizeString(value: string): string {
     try {
@@ -17,29 +17,35 @@ export class parseVacanciesPredict1606571349242 implements MigrationInterface {
   }
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    const vacancies: VacanciesPredictEntity[] = [];
-    Object.keys(rawDataSet).forEach((key) => {
+    console.log('[MIGRATION] start predict migration');
+    await queryRunner.query('DELETE from public."vacancies-predict";');
+
+    const vacancyRepository = queryRunner.connection.getRepository(
+      VacanciesPredictEntity
+    );
+
+    for (const key of Object.keys(rawDataSet))  {
+
       try {
         const sourceVacancy = rawDataSet[key];
         const vacancyEntity = new VacanciesPredictEntity();
 
         vacancyEntity.originalName = sourceVacancy['name'];
         vacancyEntity.normalizedName = this.normalizeString(sourceVacancy['name']);
-        vacancyEntity.experience = sourceVacancy['experience']['name'];
+        vacancyEntity.experience = sourceVacancy['experience']['id'];
 
         const skills = sourceVacancy['key_skills'] as {name: string}[];
         vacancyEntity.skills = skills.map(skill => skill.name);
-
-        vacancies.push(vacancyEntity);
+        console.log('[MIGRATION] work with key', key);
+        await vacancyRepository.insert(vacancyEntity);
       } catch (e) {
         console.error('[ERROR] error while iterate dataset', e);
       }
-    });
-    const vacancyRepository = queryRunner.connection.getRepository(
-      VacanciesPredictEntity
-    );
+    }
+
     try {
-      await vacancyRepository.insert(vacancies);
+
+      console.log('[MIGRATION] end predict migration');
     } catch (e) {
       console.error('[Insert error] ', e);
     }
