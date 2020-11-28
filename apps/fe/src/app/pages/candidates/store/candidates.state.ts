@@ -1,7 +1,7 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { LoadCandidates } from './candidates.actions';
 import { Candidate } from '@meteora/api-interfaces';
-import { NestPagination, NestPaginationResponse } from '../../../shared/models/pagination';
+import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { tap } from 'rxjs/operators';
@@ -45,7 +45,10 @@ export class CandidatesState {
     });
     const state = ctx.getState();
 
-    return this.nestCrudService.getEntities('candidates', state.perPage, state.pagination.page).pipe(
+    return this.nestCrudService.getEntities('candidate', {
+      page: state.pagination.page,
+      limit: state.perPage,
+    }).pipe(
       tap((response: NestPaginationResponse<Candidate>) => {
         ctx.patchState({
           status: StoreStatus.Ready,
