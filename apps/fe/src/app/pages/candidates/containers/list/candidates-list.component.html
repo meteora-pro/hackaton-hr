@@ -1,5 +1,3 @@
-<p>list works!</p>
-
 
 <nz-table #table [nzData]="candidates$ | async">
   <thead>
@@ -12,13 +10,12 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let item of (candidates$ | async)">
+  <tr *ngFor="let item of table.data">
     <td>{{ item.title }}</td>
     <td>{{ item.experiences | workExperienceYears }}</td>
     <td>{{ item.experiences[item.experiences.length - 1]?.position || '-'}}</td>
     <td>
-      навыки TODO
-      <nz-tag *ngFor="let skill of item.skills" [nzColor]="'magenta'">
+      <nz-tag *ngFor="let skill of item.skillSet" [nzColor]="'magenta'">
         {{ skill }}
       </nz-tag>
     </td>

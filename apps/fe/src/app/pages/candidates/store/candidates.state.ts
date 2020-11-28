@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { LoadCandidates } from './candidates.actions';
+import { CreateCandidates, LoadCandidates } from './candidates.actions';
 import { Candidate } from '@meteora/api-interfaces';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
@@ -12,6 +12,8 @@ export interface CandidatesStateModel {
   status: StoreStatus,
   perPage: number;
 }
+
+type Ctx = StateContext<CandidatesStateModel>;
 
 @State<CandidatesStateModel>({
   name: 'candidates',
@@ -56,5 +58,10 @@ export class CandidatesState {
         })
       })
     );
+  }
+
+  @Action(CreateCandidates)
+  public createCandidates(ctx: Ctx, { candidate }: CreateCandidates) {
+    return this.nestCrudService.addItem('candidate', candidate);
   }
 }

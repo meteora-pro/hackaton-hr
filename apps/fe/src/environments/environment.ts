@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api-hr.dev.meteora.pro/api',
+  apiUrl: 'http://localhost:3333/api',
 };
 
 /*

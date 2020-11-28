@@ -1,0 +1,111 @@
+<form nz-form nzLayout="vertical" [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <h3>
+    Контактные данные
+  </h3>
+  <nz-form-item>
+    <nz-form-label nzFor="fullName" nzRequired>
+      <span>Имя Фамилия</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your fullName!">
+      <input placeholder="ФИО"
+             nz-input
+             id="fullName"
+             formControlName="fullName"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="fullName">
+      <span>Телефон</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your phone!">
+      <input placeholder="Телефон"
+             nz-input
+             id="phone"
+             formControlName="phone"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="fullName">
+      <span>Город проживания</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your city!">
+      <input placeholder="Телефон"
+             nz-input
+             id="area"
+             formControlName="area"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <h3>Основная информация</h3>
+  <nz-form-item>
+    <nz-form-label nzFor="birthDate">
+      <span>Дата рождения</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your birthDate!">
+      <nz-date-picker [nzFormat]="'dd.MM.yyyy'"
+                      formControlName="birthDate"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="gender">
+      <span>Пол</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12" nzErrorTip="Please input your gender!">
+      <nz-radio-group formControlName="gender" nzName="gender">
+        <label nz-radio nzValue="male">Мужской</label>
+        <label nz-radio nzValue="female">Женский</label>
+      </nz-radio-group>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="title">
+      <span>Должность</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input placeholder="Должность"
+             nz-input
+             id="title"
+             formControlName="title"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzFor="skillSet">
+      <span>Навыки</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-select formControlName="skillSet" nzMode="tags" nzPlaceHolder="Please select">
+        <nz-option *ngFor="let option of keySkillOptions"
+                   [nzLabel]="option"
+                   [nzValue]="option"
+        ></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>О кандадате</nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <textarea formControlName="about" nz-input rows="2" placeholder="write any thing"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <h3>Опыт</h3>
+  <nz-form-item>
+  <experiences-control formControlName="experiences"></experiences-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzSpan]="8">
+      <button nz-button nzType="primary">Создать</button>
+      <button nz-button>Отмена</button>
+    </nz-form-control>
+  </nz-form-item>
+
+</form>
+<pre>
+  {{ formGroup.value | json }}
+</pre>

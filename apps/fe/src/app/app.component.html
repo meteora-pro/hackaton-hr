@@ -28,10 +28,10 @@
       <li nz-submenu nzOpen nzTitle="Кандидаты" nzIcon="team">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/candidates/list" [queryParams]="{active: true}">Активные отклики</a>
+            <a routerLink="/candidates/list" [queryParams]="{archive: true}">Кандидаты</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/candidates/list" [queryParams]="{archive: true}">Архив кандидатов</a>
+            <a routerLink="/candidates/create" [queryParams]="{active: true}">Добавить кандидата</a>
           </li>
         </ul>
       </li>

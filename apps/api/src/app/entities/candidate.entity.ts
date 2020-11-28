@@ -12,6 +12,14 @@ export class CandidateEntity extends BaseEntity implements Candidate {
 
   @ApiProperty()
   @Column()
+  fullName: string;
+
+  @ApiProperty()
+  @Column()
+  phone: string;
+
+  @ApiProperty()
+  @Column()
   about: string;
 
   @ApiProperty()
@@ -26,16 +34,15 @@ export class CandidateEntity extends BaseEntity implements Candidate {
     enum: CommonService.enumToArray(EducationLevelEnum),
     example: EducationLevelEnum.HIGHER,
   })
-  @Column({ type: 'enum', enum: EducationLevelEnum })
+  @Column({ type: 'enum', enum: EducationLevelEnum, nullable: true })
   educationLevel: EducationLevelEnum;
 
-
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   educations: Education[];
 
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   experiences: Experience[];
 
   @ApiProperty()
@@ -43,11 +50,11 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   gender: "male" | "female";
 
   @ApiProperty()
-  @Column('jsonb', { array: true, nullable: false, default: '{}' })
+  @Column('jsonb', { nullable: false, default: '{}' })
   languages: Language[];
 
   @ApiProperty()
-  @Column()
+  @Column({nullable: true})
   salary: number;
 
   @ApiProperty()
@@ -55,9 +62,8 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   skillSet: string[];
 
   @ApiProperty()
-  @Column()
+  @Column({nullable: true})
   skills: string;
-
 
   @ApiProperty()
   @ManyToMany(

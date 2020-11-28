@@ -1,0 +1,49 @@
+
+<nz-card *ngFor="let item of experiences">
+  <nz-form-item>
+    <nz-form-label>
+      <span>Должность</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <input placeholder="Должность"
+             nz-input
+             [(ngModel)]="item.position"
+             (ngModelChange)="emitEvent()"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label>
+      <span>Начало работы</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-date-picker [nzFormat]="'dd.MM.yyyy'"
+                      [(ngModel)]="item.start"
+                      (ngModelChange)="emitEvent()"></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>
+      <span>Окончание</span>
+    </nz-form-label>
+    <nz-form-control [nzSpan]="12">
+      <nz-date-picker [nzFormat]="'dd.MM.yyyy'"
+                      [(ngModel)]="item.end"
+                      (ngModelChange)="emitEvent()"
+      ></nz-date-picker>
+    </nz-form-control>
+  </nz-form-item>
+
+</nz-card>
+
+Итог: {{ experiences | workExperienceYears }}
+<nz-form-item>
+  <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
+    <button type="button"
+            nz-button nzType="dashed" class="add-button" (click)="add()">
+      <i nz-icon nzType="plus"></i>
+      Добавить место работы
+    </button>
+  </nz-form-control>
+</nz-form-item>
