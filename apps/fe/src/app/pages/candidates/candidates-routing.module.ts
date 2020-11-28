@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CandidatesListComponent } from './list/candidates-list.component';
+import { CandidatesListComponent } from './containers/list/candidates-list.component';
 import { CandidateCardComponent } from './card/candidate-card.component';
 import { NestCrudService } from '../../shared/services/nest-crud.service';
+import { CreateCandidateComponent } from './containers/create-candidate/create-candidate.component';
 
 const routes: Routes = [
   {
@@ -10,6 +11,9 @@ const routes: Routes = [
   },
   {
     path: 'card', component: CandidateCardComponent
+  },
+  {
+    path: 'create', component: CreateCandidateComponent
   }
 ];
 

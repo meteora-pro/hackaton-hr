@@ -84,6 +84,8 @@ export interface Vacancy {
 
 export interface Candidate {
   readonly id: number;
+  fullName: string;
+  phone: string;
   birthDate: Date;
   gender:  "male" | "female";
   area: string;
