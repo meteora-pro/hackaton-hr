@@ -36,13 +36,13 @@ export interface Education {
   "organization": string;
 }
 
-export enum languageEnum {
+export enum LanguageEnum {
   RUSSIAN = 'RUSSIAN',
   ENGLISH = 'ENGLISH',
   OTHER = 'OTHER'
 }
 
-export enum languageLevelEnum {
+export enum LanguageLevelEnum {
   A1 = 'A1',
   A2 = 'A2',
   B1 = 'B1',
@@ -52,8 +52,8 @@ export enum languageLevelEnum {
 }
 
 export interface Language {
-  name: languageEnum;
-  level: languageLevelEnum;
+  name: LanguageEnum;
+  level: LanguageLevelEnum;
 }
 
 export interface Experience {
