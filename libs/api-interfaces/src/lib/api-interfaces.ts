@@ -69,7 +69,7 @@ export interface Vacancy {
   address?: string;
   salaryFrom: number;
   salaryTo: number;
-  specialization: Specialization;
+  specialization: Specialization[];
   experience: ExperienceEnum;
   salaryGross: boolean;
   schedule: ScheduleEnum;
@@ -87,7 +87,7 @@ export interface Candidate {
   birthDate: Date;
   gender:  "male" | "female";
   area: string;
-  specialization: Specialization;
+  specialization: Specialization[];
   title: string;
   salary: number;
   educationLevel: EducationLevelEnum;

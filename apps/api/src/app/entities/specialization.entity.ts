@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToMany, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Specialization } from '@meteora/api-interfaces';
 import { ApiProperty } from '@nestjs/swagger';
@@ -17,11 +17,11 @@ export class SpecializationEntity extends BaseEntity implements Specialization {
 
 
   @ApiProperty({type: [VacancyEntity]})
-  @OneToMany(() => VacancyEntity, vacancy => vacancy.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
+  @ManyToMany(() => VacancyEntity, vacancy => vacancy.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
   vacancies: VacancyEntity[];
 
   @ApiProperty({type: [VacancyEntity]})
-  @OneToMany(() => VacancyEntity, candidate => candidate.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
+  @ManyToMany(() => VacancyEntity, candidate => candidate.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
   candidates: VacancyEntity[];
 
 }
