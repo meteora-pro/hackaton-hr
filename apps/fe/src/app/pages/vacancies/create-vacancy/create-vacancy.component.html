@@ -8,7 +8,7 @@
     <nz-form-label
       nzFor="nickname"
       nzRequired
-      nzTooltipTitle="Начните писать требуемую должность чтобы найти то, что нужно"
+      nzTooltipTitle="Напишите требуемую должность. Можно указать Java или React и выбрать из предложенных"
     >
       <span>Должность</span>
     </nz-form-label>
@@ -96,13 +96,10 @@
 
   <h3>Навыки и обязанности</h3>
 
-
-
-
   <nz-form-item>
     <nz-form-label
       nzFor="skills"
-      nzTooltipTitle="Чтобы появились релевантные навыки, заполните название вакансии и опыт работы"
+      nzTooltipTitle="Можно выбрать предложенные навыки или указать те, которых нет в списке. Со временем мы будем точнее предлагать релевантные навыки"
     >
       <span>Навыки</span>
     </nz-form-label>
@@ -111,12 +108,13 @@
         id="skills"
         formControlName="keySkills"
         nzMode="tags"
-        nzPlaceHolder="Начните вводить значения"
+        [nzPlaceHolder]="
+          (skills$ | async).length
+            ? 'Нажмите чтобы увидеть навыки'
+            : 'Укажите должность и опыт, чтобы увидеть навыки'
+        "
       >
-
-        <ng-container
-          *ngFor="let skill of skills$ | async; trackBy: trackByFn"
-        >
+        <ng-container *ngFor="let skill of skills$ | async; trackBy: trackByFn">
           <nz-option
             *ngIf="!(isSkillsLoad$ | async)"
             [nzValue]="skill"
@@ -126,7 +124,6 @@
         <nz-option *ngIf="isSkillsLoad$ | async" nzDisabled nzCustomContent>
           <i nz-icon nzType="loading" class="loading-icon"></i> Сейчас найдем...
         </nz-option>
-
       </nz-select>
     </nz-form-control>
   </nz-form-item>

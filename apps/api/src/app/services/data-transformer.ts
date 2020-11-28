@@ -47,7 +47,7 @@ export class DataTransformer {
         description: rawVacation.description,
         experience: parseVacancyExperience(rawVacation.experience),
         hasTest: rawVacation.has_test,
-        keySkills: rawVacation.key_skills,
+        keySkills: rawVacation.key_skills.map(({ name }) => name),
         name: rawVacation.name,
         publishedAt: parseDate(rawVacation.published_at),
         responseLetterRequired: rawVacation.response_letter_required,
@@ -68,7 +68,18 @@ export class DataTransformer {
 }
 
 export function parseVacancyExperience(rawExperience): ExperienceEnum {
-  return ExperienceEnum.FROM_0_TO_1;
+  switch (rawExperience) {
+    case 'noExperience':
+      return ExperienceEnum.FROM_0_TO_1;
+    case 'between1And3':
+      return ExperienceEnum.FROM_1_TO_3;
+    case 'between3And6':
+      return ExperienceEnum.FROM_3_TO_5;
+    case 'moreThan6':
+      return ExperienceEnum.FROM_5;
+    default:
+      return ExperienceEnum.UNKNOWN;
+  }
 }
 
 export function parseVacancySchedule(val): ScheduleEnum {

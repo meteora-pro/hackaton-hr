@@ -10,6 +10,7 @@ export enum ExperienceEnum {
   FROM_1_TO_3 = 'FROM_1_TO_3',
   FROM_3_TO_5 = 'FROM_3_TO_5',
   FROM_5 = 'FROM_5',
+  UNKNOWN = 'UNKNOWN'
 }
 
 export interface Specialization {
