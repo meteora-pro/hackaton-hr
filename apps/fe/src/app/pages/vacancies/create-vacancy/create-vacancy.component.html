@@ -95,21 +95,38 @@
   </nz-form-item>
 
   <h3>Навыки и обязанности</h3>
+
+
+
+
   <nz-form-item>
-    <nz-form-label nzFor="nickname">
+    <nz-form-label
+      nzFor="skills"
+      nzTooltipTitle="Чтобы появились релевантные навыки, заполните название вакансии и опыт работы"
+    >
       <span>Навыки</span>
     </nz-form-label>
     <nz-form-control [nzSpan]="12">
       <nz-select
+        id="skills"
         formControlName="keySkills"
         nzMode="tags"
         nzPlaceHolder="Начните вводить значения"
       >
-        <nz-option
-          *ngFor="let option of keySkillOptions"
-          [nzLabel]="option"
-          [nzValue]="option"
-        ></nz-option>
+
+        <ng-container
+          *ngFor="let skill of skills$ | async; trackBy: trackByFn"
+        >
+          <nz-option
+            *ngIf="!(isSkillsLoad$ | async)"
+            [nzValue]="skill"
+            [nzLabel]="skill"
+          ></nz-option>
+        </ng-container>
+        <nz-option *ngIf="isSkillsLoad$ | async" nzDisabled nzCustomContent>
+          <i nz-icon nzType="loading" class="loading-icon"></i> Сейчас найдем...
+        </nz-option>
+
       </nz-select>
     </nz-form-control>
   </nz-form-item>
@@ -136,10 +153,9 @@
     </nz-form-control>
   </nz-form-item>
 
-
   <nz-form-item>
     <nz-form-label [nzSpan]="12" nzFor="vacancyOwner"
-    >Владелец вакансии</nz-form-label
+      >Владелец вакансии</nz-form-label
     >
     <nz-form-control [nzSpan]="12">
       <input
@@ -153,7 +169,7 @@
 
   <nz-form-item>
     <nz-form-label [nzSpan]="12" nzFor="vacancyNumber"
-    >Номер вакансии</nz-form-label
+      >Номер вакансии</nz-form-label
     >
     <nz-form-control [nzSpan]="12">
       <input
