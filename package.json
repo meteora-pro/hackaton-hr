@@ -1,5 +1,5 @@
 {
-  "name": "meteora",
+  "name": "@meteora/hr-hackaton",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -38,9 +38,15 @@
     "@angular/platform-browser-dynamic": "^10.1.0",
     "@angular/router": "^10.1.0",
     "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.6.1",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
+    "@nestjs/swagger": "^4.7.5",
+    "@nestjs/typeorm": "^7.1.5",
+    "@nestjsx/crud": "^4.6.2",
+    "@nestjsx/crud-typeorm": "^4.6.2",
     "@nrwl/angular": "10.4.4",
+    "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
