@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Experience } from '@meteora/api-interfaces';
 
-import formatDistanceStrict from 'date-fns/formatDistanceStrict';
+import formatDistance from 'date-fns/formatDistance';
 
 @Pipe({
   name: 'workExperienceYears'
@@ -9,9 +9,11 @@ import formatDistanceStrict from 'date-fns/formatDistanceStrict';
 export class WorkExperienceYearsPipe implements PipeTransform {
 
   transform(experiences: Experience[]): number {
-    return [...experiences].reduce((a, b) => {
-      return a + formatDistanceStrict(b.start, b.end);
+    return experiences.reduce((acc, item) => {
+      const d = parseFloat(formatDistance(item.start, item.end, {
+        addSuffix: false,
+      }));
+      return acc + d;
     }, 0);
   }
-
 }

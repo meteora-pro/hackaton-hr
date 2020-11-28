@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Select } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Candidate } from '@meteora/api-interfaces';
+import { LoadCandidates } from '../store/candidates.actions';
 
 @Component({
   selector: 'meteora-candidates-list',
@@ -10,12 +11,13 @@ import { Candidate } from '@meteora/api-interfaces';
 })
 export class CandidatesListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store) { }
 
   @Select()
   candidates$: Observable<Candidate[]>;
 
   ngOnInit(): void {
+    this.store.dispatch(new LoadCandidates())
   }
 
 }

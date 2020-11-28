@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import {
   ExperienceEnum,
@@ -75,12 +75,13 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   schedule: ScheduleEnum;
 
   @ApiProperty()
-  @ManyToOne(
+  @ManyToMany(
     () => SpecializationEntity,
     (specialization) => specialization.vacancies,
     { nullable: true, onDelete: 'SET NULL' }
   )
-  specialization: SpecializationEntity;
+  @JoinTable()
+  specialization: SpecializationEntity[];
 
   @ApiProperty()
   @Column()

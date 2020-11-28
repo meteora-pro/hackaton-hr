@@ -1,7 +1,7 @@
 <p>list works!</p>
 
 
-<nz-table #basicTable [nzData]="candidates$ | async">
+<nz-table #table [nzData]="candidates$ | async">
   <thead>
   <tr>
     <th>Должность</th>
@@ -12,16 +12,18 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of basicTable.data">
-    <td>{{ data.name }}</td>
-    <td>{{ data. }}</td>
-    <td>{{ data.address }}</td>
+  <tr *ngFor="let item of (candidates$ | async)">
+    <td>{{ item.title }}</td>
+    <td>{{ item.experiences | workExperienceYears }}</td>
+    <td>{{ item.experiences[item.experiences.length - 1]?.position || '-'}}</td>
     <td>
-      <a>Action 一 {{data.name}}</a>
-      <a>Delete</a>
+      навыки TODO
+      <nz-tag *ngFor="let skill of item.skills" [nzColor]="'magenta'">
+        {{ skill }}
+      </nz-tag>
     </td>
     <td>
-      {{ data.salary}}
+      от {{ item.salary | number }} рублей
     </td>
   </tr>
   </tbody>

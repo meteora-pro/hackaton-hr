@@ -9,13 +9,17 @@ import { CandidatesListComponent } from './list/candidates-list.component';
 import { CandidateCardComponent } from './card/candidate-card.component';
 import { CandidatesState } from './store/candidates.state';
 import { WorkExperienceYearsPipe } from './pipes/work-experience-years.pipe';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
     CommonModule,
     CandidatesRoutingModule,
     NzTableModule,
-    NgxsModule.forFeature([CandidatesState])
+    NgxsModule.forFeature([CandidatesState]),
+    NzTagModule,
+    HttpClientModule,
   ],
   declarations: [CandidatesListComponent, CandidateCardComponent, WorkExperienceYearsPipe],
 })
