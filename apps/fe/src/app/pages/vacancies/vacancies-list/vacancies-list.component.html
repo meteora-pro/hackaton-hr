@@ -1,25 +1,27 @@
-<nz-table
-  nzShowSizeChanger
-  [nzData]="listOfRandomUser"
-  [nzFrontPagination]="false"
-  [nzLoading]="loading"
-  [nzTotal]="total"
-  [nzPageSize]="pageSize"
-  [nzPageIndex]="pageIndex"
-  (nzQueryParams)="onQueryParamsChange($event)"
->
+
+<nz-table #table [nzData]="vacancies$ | async" (nzPageIndexChange)="handleChangePage($event)">
   <thead>
   <tr>
-    <th nzColumnKey="name" [nzSortFn]="true">Name</th>
-    <th nzColumnKey="gender" [nzFilters]="filterGender" [nzFilterFn]="true">Gender</th>
-    <th nzColumnKey="email" [nzSortFn]="true">Email</th>
+    <th>Должность</th>
+    <th>Опыт работы</th>
+    <th>Дата открытия</th>
+    <th>Приоритет</th>
+    <th>Зарплата</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let data of listOfRandomUser">
-    <td>{{ data.name.first }} {{ data.name.last }}</td>
-    <td>{{ data.gender }}</td>
-    <td>{{ data.email }}</td>
+  <tr *ngFor="let item of table.data">
+    <td>
+      <a [routerLink]="item.id">{{ item.name }}</a>
+    </td>
+    <td>{{ item.experience }}</td>
+    <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
+    <td>
+      TODO
+    </td>
+    <td>
+      от {{ item.salaryFrom | number }} рублей
+    </td>
   </tr>
   </tbody>
 </nz-table>
