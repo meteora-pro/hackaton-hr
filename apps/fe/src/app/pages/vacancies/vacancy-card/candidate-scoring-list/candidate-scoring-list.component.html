@@ -1,6 +1,6 @@
 <ng-container *ngIf="pagination$ | async as pagination">
   <nz-table #table
-            [nzData]="pagination.data"
+            [nzData]="pagination"
             (nzPageIndexChange)="handleChangePage($event)"
             [nzPageSize]="perPage$ | async"
             [nzPageIndex]="pagination.page"
@@ -24,7 +24,9 @@
       <td>{{ item.candidate?.experiences | workExperienceYears }}</td>
       <td>TODO</td>
       <td>
-        <nz-progress [nzPercent]="75" nzType="circle" [nzWidth]="80"></nz-progress>
+        <nz-progress [nzPercent]="item.scoring?.percent | number:'1.0-0'"
+                     nzType="circle"
+                     [nzWidth]="80"></nz-progress>
       </td>
       <td>
         <button nz-button nzType="default" (click)="openScoringModal(item)">Отчет</button>
