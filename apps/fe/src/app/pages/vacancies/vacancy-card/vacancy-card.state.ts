@@ -1,14 +1,18 @@
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { LoadVacancyCard } from './vacancy-card.actions';
-import { Vacancy } from '@meteora/api-interfaces';
-import { StoreStatus } from '../../../shared/models/store.status.enum';
-import { tap } from 'rxjs/operators';
-import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+
+import { tap } from 'rxjs/operators';
+
+import { Candidate, Vacancy } from '@meteora/api-interfaces';
+
+import { LoadVacancyCard } from './vacancy-card.actions';
+import { StoreStatus } from '../../../shared/models/store.status.enum';
+import { NestCrudService } from '../../../shared/services/nest-crud.service';
 
 export interface VacancyCardStateModel {
   status: StoreStatus,
   vacancy: Vacancy;
+  candidates: Candidate[],
 }
 
 type Ctx = StateContext<VacancyCardStateModel>;
@@ -18,6 +22,7 @@ type Ctx = StateContext<VacancyCardStateModel>;
   defaults: {
     status: StoreStatus.New,
     vacancy: null,
+    candidates: [],
   }
 })
 @Injectable()
@@ -38,10 +43,14 @@ export class VacancyCardState {
 
   @Action(LoadVacancyCard, { cancelUncompleted: true })
   public loadVacancyCard(ctx: Ctx, { id }: LoadVacancyCard) {
+    ctx.patchState({
+      status: StoreStatus.Loading,
+    });
     return this.nestCrudService.getEntityById('vacancy', id).pipe(
       tap((response: Vacancy) => {
         ctx.patchState({
-          vacancy: response
+          vacancy: response,
+          status: StoreStatus.Ready,
         })
       })
     );
