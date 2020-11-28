@@ -1,7 +1,5 @@
 {
   "name": "@meteora/hr-hackaton-fe",
-  "version": "1.0.0",
-  "dependencies": {
-
-  }
+  "version": "1.0.1",
+  "dependencies": {}
 }
