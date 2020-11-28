@@ -1,27 +1,33 @@
+<ng-container *ngIf="pagination$ | async as pagination">
+  <nz-table #table
+            [nzData]="pagination.data"
+            (nzPageIndexChange)="handleChangePage($event)"
+            [nzPageSize]="perPage$ | async"
+            [nzTotal]="pagination.total">
+    <thead>
+    <tr>
+      <th>Должность</th>
+      <th>Опыт работы</th>
+      <th>Дата открытия</th>
+      <th>Приоритет</th>
+      <th>Зарплата</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of table.data">
+      <td>
+        <a [routerLink]="item.id">{{ item.name }}</a>
+      </td>
+      <td>{{ item.experience }}</td>
+      <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
+      <td>
+        TODO
+      </td>
+      <td>
+        от {{ item.salaryFrom | number }} рублей
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
 
-<nz-table #table [nzData]="vacancies$ | async" (nzPageIndexChange)="handleChangePage($event)">
-  <thead>
-  <tr>
-    <th>Должность</th>
-    <th>Опыт работы</th>
-    <th>Дата открытия</th>
-    <th>Приоритет</th>
-    <th>Зарплата</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let item of table.data">
-    <td>
-      <a [routerLink]="item.id">{{ item.name }}</a>
-    </td>
-    <td>{{ item.experience }}</td>
-    <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
-    <td>
-      TODO
-    </td>
-    <td>
-      от {{ item.salaryFrom | number }} рублей
-    </td>
-  </tr>
-  </tbody>
-</nz-table>
+</ng-container>
