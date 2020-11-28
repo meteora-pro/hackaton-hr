@@ -40,8 +40,6 @@ export enum languageEnum {
   ENGLISH = 'ENGLISH'
 }
 
-// <select class="bloko-select" name="foreignLanguages[0].degree" data-qa="resume-language-level-select"><option value="a1">A1 — Начальный</option><option value="a2">A2 — Элементарный</option><option value="b1">B1 — Средний</option><option value="b2">B2 — Средне-продвинутый</option><option value="c1">C1 — Продвинутый</option><option value="c2">C2 — В совершенстве</option></select>
-
 export enum languageLevelEnum {
   A1 = 'A1',
   A2 = 'A2',
@@ -87,7 +85,7 @@ export interface Vacancy {
 export interface Candidate {
   readonly id: number;
   birthDate: Date;
-  gender: 'male' | 'female';
+  gender:  "male" | "female";
   area: string;
   specialization: Specialization;
   title: string;

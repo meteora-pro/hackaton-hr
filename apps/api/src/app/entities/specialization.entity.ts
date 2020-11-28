@@ -20,4 +20,8 @@ export class SpecializationEntity extends BaseEntity implements Specialization {
   @OneToMany(() => VacancyEntity, vacancy => vacancy.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
   vacancies: VacancyEntity[];
 
+  @ApiProperty({type: [VacancyEntity]})
+  @OneToMany(() => VacancyEntity, candidate => candidate.specialization, {nullable: true, persistence: true, onUpdate: "SET NULL", cascade: true})
+  candidates: VacancyEntity[];
+
 }
