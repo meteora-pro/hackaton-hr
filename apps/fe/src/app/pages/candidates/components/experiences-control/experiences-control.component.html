@@ -40,7 +40,8 @@
 Итог: {{ experiences | workExperienceYears }}
 <nz-form-item>
   <nz-form-control [nzXs]="{ span: 24, offset: 0 }" [nzSm]="{ span: 20, offset: 4 }">
-    <button nz-button nzType="dashed" class="add-button" (click)="add()">
+    <button type="button"
+            nz-button nzType="dashed" class="add-button" (click)="add()">
       <i nz-icon nzType="plus"></i>
       Добавить место работы
     </button>
