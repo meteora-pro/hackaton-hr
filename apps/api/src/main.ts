@@ -20,14 +20,15 @@ async function bootstrap() {
     .setBasePath('/' + globalPrefix)
     .setTitle('Hackaton hunt U api')
     .addServer(appConfig.appUrl)
-    .addBearerAuth()
     .setDescription('Hackaton hunt U API description')
     .setVersion('1.0')
     .build();
 
+
+
   const document = SwaggerModule.createDocument(app, options);
   // Внутренная документация будет доступно только для внутреннего использования
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup(`${globalPrefix}/docs`, app, document);
 
   app.enableCors();
   const port = process.env.PORT || 3333;
