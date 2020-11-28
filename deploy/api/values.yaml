@@ -50,6 +50,9 @@ ingress:
     - host: hr.dev.meteora.pro
       paths:
         - '/api'
+    - host: huntu.dev.meteora.pro
+      paths:
+        - '/api'
   tls:
     - secretName: api-hr-hackaton-dev-meteora-pro-tls
       hosts:
@@ -57,6 +60,9 @@ ingress:
     - secretName: hr-dev-meteora-pro-tls
       hosts:
         - hr.dev.meteora.pro
+    - secretName: huntu-dev-meteora-pro-tls
+      hosts:
+        - huntu.dev.meteora.pro
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
