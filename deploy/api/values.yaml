@@ -47,10 +47,16 @@ ingress:
     - host: api-hr.dev.meteora.pro
       paths:
         - '/'
+    - host: hr.dev.meteora.pro
+      paths:
+        - '/api'
   tls:
     - secretName: api-hr-hackaton-dev-meteora-pro-tls
       hosts:
         - api-hr.dev.meteora.pro
+    - secretName: hr-dev-meteora-pro-tls
+      hosts:
+        - hr.dev.meteora.pro
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
