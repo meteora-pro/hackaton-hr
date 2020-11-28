@@ -43,7 +43,7 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   hasTest: boolean;
 
   @ApiProperty()
-  @Column('text', { array: true, nullable: true, default: '{}' })
+  @Column('jsonb', { nullable: true, default: '[]' })
   keySkills: string[];
 
   @ApiProperty()
