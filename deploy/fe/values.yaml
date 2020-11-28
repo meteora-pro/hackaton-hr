@@ -5,8 +5,9 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  pullPolicy: IfNotPresent
+  repository: registry.gitlab.com/meteora-pro/hackaton2020/hackaton-hr
+    tag: fe-latest
+  pullPolicy: Always
 
 imagePullSecrets: []
 nameOverride: ""
