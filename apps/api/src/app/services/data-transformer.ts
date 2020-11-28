@@ -68,7 +68,7 @@ export class DataTransformer {
 }
 
 export function parseVacancyExperience(rawExperience): ExperienceEnum {
-  switch (rawExperience) {
+  switch (rawExperience?.id) {
     case 'noExperience':
       return ExperienceEnum.FROM_0_TO_1;
     case 'between1And3':
