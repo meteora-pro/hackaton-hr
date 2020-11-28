@@ -10,6 +10,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ScoringModalComponent } from './scoring-modal/scoring-modal.component';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
     NzTableModule,
     SharedModule,
     NzProgressModule,
-    NzButtonModule
+    NzButtonModule,
+    NzModalModule
   ],
   declarations: [VacancyCardComponent, CandidateScoringListComponent, ScoringModalComponent],
 })

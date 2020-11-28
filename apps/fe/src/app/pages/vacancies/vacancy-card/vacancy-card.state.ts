@@ -73,7 +73,9 @@ export class VacancyCardState {
   public loadVacancyCard(ctx: Ctx, { id }: LoadVacancyCard) {
     ctx.patchState({
       status: StoreStatus.Loading,
+      vacancyId: id,
     });
+    ctx.dispatch(new LoadScoringCandidates(0))
     return this.nestCrudService.getEntityById('vacancy', id).pipe(
       tap((response: Vacancy) => {
         ctx.patchState({
@@ -90,7 +92,7 @@ export class VacancyCardState {
     ctx.patchState({
       paginationStatus: StoreStatus.Loading,
     });
-    return this.nestCrudService.getEntities<CandidateScoring>('', {
+    return this.nestCrudService.getEntities<CandidateScoring>(`vacancy/${state.vacancyId}/matched`, {
       page: page || state.pagination.page,
       limit: state.perPage,
     }).pipe(
