@@ -30,7 +30,7 @@ export class NestCrudService<T extends {id: string|number}> {
     return this.http.get<NestPaginationResponse<T>>(`${this.apiUrl}/${entityName}?${queryString}`);
   }
 
-  getEntityById(
+  getEntityById<T>(
     entityName: string,
     id: number,
   ): Observable<T> {

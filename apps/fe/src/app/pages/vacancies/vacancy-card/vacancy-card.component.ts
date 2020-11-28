@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -10,7 +10,8 @@ import { VacancyState } from '../store/vacancy.state';
 @Component({
   selector: 'meteora-vacancy-card',
   templateUrl: './vacancy-card.component.html',
-  styleUrls: ['./vacancy-card.component.less']
+  styleUrls: ['./vacancy-card.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VacancyCardComponent implements OnInit, OnDestroy {
 

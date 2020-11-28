@@ -8,7 +8,6 @@ import { CandidatesRoutingModule } from './candidates-routing.module';
 import { CandidatesListComponent } from './containers/list/candidates-list.component';
 import { CandidateCardComponent } from './containers/card/candidate-card.component';
 import { CandidatesState } from './store/candidates.state';
-import { WorkExperienceYearsPipe } from './pipes/work-experience-years.pipe';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { HttpClientModule } from '@angular/common/http';
 import { CandidateFormComponent } from './components/candidate-form/candidate-form.component';
@@ -25,6 +24,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { ExperiencesControlComponent } from './components/experiences-control/experiences-control.component';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -46,14 +46,16 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     FormsModule,
     NzCardModule,
     NzIconModule,
+    SharedModule,
   ],
   declarations: [
     CandidatesListComponent,
     CandidateCardComponent,
-    WorkExperienceYearsPipe,
     CandidateFormComponent,
     CreateCandidateComponent,
     ExperiencesControlComponent
   ],
+  providers: [
+  ]
 })
 export class CandidatesModule { }

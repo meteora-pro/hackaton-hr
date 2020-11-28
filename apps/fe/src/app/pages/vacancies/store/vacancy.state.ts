@@ -4,7 +4,6 @@ import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { Vacancy } from '@meteora/api-interfaces';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { tap } from 'rxjs/operators';
-import { CandidatesStateModel } from '../../candidates/store/candidates.state';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { Injectable } from '@angular/core';
 
@@ -16,7 +15,7 @@ export interface VacancyStateModel {
   currentVacancy: Vacancy;
 }
 
-type Ctx = StateContext<CandidatesStateModel>;
+type Ctx = StateContext<VacancyStateModel>;
 
 @State<VacancyStateModel>({
   name: 'vacancy',
@@ -82,7 +81,7 @@ export class VacancyState {
     return this.nestCrudService.addItem('vacancy', vacancy);
   }
 
-  @Action(LoadVacancyCard)
+  @Action(LoadVacancyCard, { cancelUncompleted: true })
   public loadVacancyCard(ctx: Ctx, { id }: LoadVacancyCard) {
     return this.nestCrudService.getEntityById('vacancy', id).pipe(
       tap((response: Vacancy) => {
