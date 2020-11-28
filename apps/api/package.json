@@ -1,6 +1,6 @@
 {
   "name": "@meteora/hr-hackaton-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "@nestjs/common": "^7.0.0",
     "@nestjs/config": "^0.6.1",
