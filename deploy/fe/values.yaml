@@ -48,13 +48,16 @@ ingress:
     - host: hr.dev.meteora.pro
       paths:
         - '/'
+    - host: huntu.dev.meteora.pro
+      paths:
+        - '/'
   tls:
     - secretName: hr-dev-meteora-pro-tls
       hosts:
         - hr.dev.meteora.pro
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - secretName: huntu-dev-meteora-pro-tls
+      hosts:
+        - huntu.dev.meteora.pro
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
