@@ -48,6 +48,6 @@ export class VacancyController implements CrudController<VacancyEntity> {
     return candidates.map( candidate => ({
       candidate,
       scoring: randomScoring(),
-    })).sort((a,b) => a.scoring.percent - b.scoring.percent);
+    })).sort((a,b) => b.scoring.percent - a.scoring.percent);
   }
 }
