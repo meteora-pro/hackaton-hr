@@ -22,13 +22,6 @@ const routes: Routes = [
         (m) => m.CandidatesModule
       ),
   },
-  {
-    path: 'vacancy',
-    loadChildren: () =>
-      import('./vacancy/vacancy.module').then(
-        (m) => m.VacancyModule
-      ),
-  },
 ];
 
 @NgModule({

@@ -1,0 +1,14 @@
+requests
+parse_hh_data
+pandas
+sqlalchemy
+IPython
+psycopg2-binary
+yoyo-migrations==7.0.2
+jupyterlab
+matplotlib
+codecs
+fasttext
+wikipedia
+sklearn
+wordcloud
