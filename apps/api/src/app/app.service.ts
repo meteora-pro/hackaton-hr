@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@meteora/api-interfaces';
+import { AppConfig } from './app.config';
+
+export interface ServerVersionInfo {
+  version: string;
+}
 
 @Injectable()
 export class AppService {
-  getData(): Message {
-    return { message: 'Welcome to api!' };
+  getVersion(): ServerVersionInfo {
+    return { version: AppConfig.release };
   }
 }
