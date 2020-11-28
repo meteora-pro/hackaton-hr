@@ -19,6 +19,7 @@ export interface Specialization {
 }
 
 export enum EducationLevelEnum {
+  UNKNOWN = 'UNKNOWN',
   SECONDARY = 'SECONDARY',
   SPECIAL_SECONDARY = 'SPECIAL_SECONDARY',
   UNFINISHED_HIGHER = 'UNFINISHED_HIGHER',
@@ -37,7 +38,8 @@ export interface Education {
 
 export enum languageEnum {
   RUSSIAN = 'RUSSIAN',
-  ENGLISH = 'ENGLISH'
+  ENGLISH = 'ENGLISH',
+  OTHER = 'OTHER'
 }
 
 export enum languageLevelEnum {
@@ -87,7 +89,7 @@ export interface Candidate {
   fullName: string;
   phone: string;
   birthDate: Date;
-  gender:  "male" | "female";
+  gender:  "male" | "female" | "unknown";
   area: string;
   specialization: Specialization[];
   title: string;

@@ -47,7 +47,7 @@ export class CandidateEntity extends BaseEntity implements Candidate {
 
   @ApiProperty()
   @Column()
-  gender: "male" | "female";
+  gender: "male" | "female" | "unknown";
 
   @ApiProperty()
   @Column('jsonb', { nullable: false, default: '{}' })
