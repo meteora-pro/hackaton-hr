@@ -13,6 +13,7 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { ru_RU } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
+import { CoreModule } from './core/core.module';
 
 registerLocaleData(ru);
 
@@ -22,13 +23,14 @@ registerLocaleData(ru);
   ],
   imports: [
     BrowserModule,
+    CoreModule,
     AppRoutingModule,
     IconsProviderModule,
     NzLayoutModule,
     NzMenuModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: ru_RU }],
   bootstrap: [AppComponent]
