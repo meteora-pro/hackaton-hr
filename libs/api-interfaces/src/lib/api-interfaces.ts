@@ -68,7 +68,8 @@ export interface Experience {
 export interface Vacancy {
   readonly id: number;
   name: string;
-  responseLetterRequired: boolean;
+  vacancyNumber: string;
+  vacancyOwner: string;
   areaName?: string; // справочник из hh
   address?: string;
   salaryFrom: number;
