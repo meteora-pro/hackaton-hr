@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { VacanciesListComponent } from './vacancies-list/vacancies-list.component';
-import { ConstructorComponent } from './constructor/constructor.component';
-import { CardComponent } from './card/card.component';
+import { CreateVacancyComponent } from './create-vacancy/create-vacancy.component';
 
 const routes: Routes = [
   {
@@ -15,12 +14,8 @@ const routes: Routes = [
     component: VacanciesListComponent,
   },
   {
-    path: 'constructor',
-    component: ConstructorComponent,
-  },
-  {
-    path: 'card',
-    component: CardComponent,
+    path: 'create',
+    component: CreateVacancyComponent,
   },
 ];
 
