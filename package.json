@@ -47,6 +47,7 @@
     "@nestjsx/crud-typeorm": "^4.6.2",
     "@nrwl/angular": "10.4.4",
     "pg": "^8.5.1",
+    "ng-zorro-antd": "^10.1.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
