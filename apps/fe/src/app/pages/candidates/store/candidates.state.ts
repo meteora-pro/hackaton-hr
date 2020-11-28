@@ -5,6 +5,7 @@ import { NestPagination, NestPaginationResponse } from '../../../shared/models/p
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { tap } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 
 export interface CandidatesStateModel {
   pagination: NestPaginationResponse<Candidate>,
@@ -26,6 +27,7 @@ export interface CandidatesStateModel {
     status: StoreStatus.New,
   }
 })
+@Injectable()
 export class CandidatesState {
 
   constructor(private nestCrudService: NestCrudService<Candidate>) {
@@ -37,7 +39,7 @@ export class CandidatesState {
   }
 
   @Action(LoadCandidates)
-  public load(ctx: StateContext<CandidatesStateModel>, { payload }: LoadCandidates) {
+  public load(ctx: StateContext<CandidatesStateModel>) {
     ctx.patchState({
       status: StoreStatus.Loading,
     });
