@@ -161,12 +161,13 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   const positiveCorrection = 1 - scoring;
   const negativeCorrection = scoring;
 
-  const percent = Math.max(Math.floor(scoring - (negativeCorrection * negativeScoringBalance) + (positiveCorrection * positiveScoringBalance )), 100);
+  const percent = Math.min(Math.floor(scoring - (negativeCorrection * negativeScoringBalance)/ 100 + (positiveCorrection * positiveScoringBalance ) /100), 100);
 
   return {
     candidate: {
       title: scoringResults.title,
       experiences: scoringResults.experiences,
+      id: scoringResults.cid,
     } as unknown as CandidateEntity,
     scoring: {
       percent,
