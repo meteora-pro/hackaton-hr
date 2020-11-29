@@ -1,0 +1,29 @@
+<div nz-row>
+  <div nz-col nzSpan="6">
+    <nz-progress [nzPercent]="scoring.percent | number:'1.0-0'"
+                 nzType="circle"
+                 [nzWidth]="80"></nz-progress>
+  </div>
+  <div nz-col nzSpan="18">
+    <nz-tag *ngFor="let skill of scoring.matchingSkills"
+            [nzColor]="'blue'">{{ skill }}</nz-tag>
+  </div>
+</div>
+<div nz-row class="scoring-reasons">
+  <div nz-col nzSpan="12">
+    <ul>
+      <li *ngFor="let item of scoring.positiveTags">
+        <i nz-icon [nzType]="'plus'"></i>
+        <span>{{ item }}</span>
+      </li>
+    </ul>
+  </div>
+  <div nz-col nzSpan="12">
+    <ul>
+      <li *ngFor="let item of scoring.negativeTags">
+        <i nz-icon [nzType]="'minus'"></i>
+        <span>{{ item }}</span>
+      </li>
+    </ul>
+  </div>
+</div>
