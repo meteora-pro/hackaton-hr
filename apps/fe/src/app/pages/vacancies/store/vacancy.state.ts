@@ -31,7 +31,7 @@ type Ctx = StateContext<VacancyStateModel>;
     perPage: 10,
     status: StoreStatus.New,
   },
-  children: [VacancyConstructorState, VacancyCardState]
+  children: [VacancyConstructorState]
 })
 @Injectable()
 export class VacancyState {

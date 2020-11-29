@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LoadCandidateById } from '../candidate-card.actions';
+import { ApproveCandidate, LoadCandidateById, RejectCandidate } from '../candidate-card.actions';
 import { CandidateCardState } from '../candidate-card.state';
 import { Candidate } from '@meteora/api-interfaces';
 
@@ -42,6 +42,12 @@ export class CandidateCardComponent implements OnInit, OnDestroy {
 
   handleRejectCandidate() {
     this.isVisibleRejectModal = false;
+    this.store.dispatch(new RejectCandidate());
+  }
+
+  handleApproveCandidate() {
+    this.isVisibleApproveModal = false;
+    this.store.dispatch(new ApproveCandidate());
   }
 
   handleCancel() {

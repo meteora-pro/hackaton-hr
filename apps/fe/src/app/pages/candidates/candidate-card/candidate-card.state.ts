@@ -1,11 +1,12 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { LoadCandidateById, LoadScoringVacancies } from './candidate-card.actions';
+import { ApproveCandidate, LoadCandidateById, LoadScoringVacancies, RejectCandidate } from './candidate-card.actions';
 import { Candidate, VacancyScoring } from '@meteora/api-interfaces';
 import { Injectable } from '@angular/core';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
 import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { tap } from 'rxjs/operators';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
+import { ShowNotification } from '../../../core/store/core.actions';
 
 export interface CandidateCardStateModel {
   candidate: Candidate,
@@ -78,7 +79,6 @@ export class CandidateCardState {
     )
   }
 
-
   @Action(LoadScoringVacancies, { cancelUncompleted: true})
   public loadScoringCandidates(ctx: Ctx, { page }: LoadScoringVacancies) {
     const state = ctx.getState();
@@ -96,5 +96,15 @@ export class CandidateCardState {
         });
       })
     )
+  }
+
+  @Action(RejectCandidate)
+  public rejectCandidate(ctx: Ctx) {
+    ctx.dispatch(new ShowNotification('', 'Кандидату отправлен отказ'));
+  }
+
+  @Action(ApproveCandidate)
+  public approveCandidate(ctx: Ctx) {
+    ctx.dispatch(new ShowNotification('', 'Кандидату добавлен в процесс'));
   }
 }
