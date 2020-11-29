@@ -26,7 +26,15 @@
   <div nz-row>
     <div nz-col nzSpan="10">
       <h3>Чем предстоит заниматься</h3>
-      <div [innerHTML]="vacancy.description"></div>
+      <div [class.vacation-description]="vacancy.description?.length > 250"
+           [class.expanded]="isExpandedDescription">
+        <div [innerHTML]="vacancy.description"></div>
+      </div>
+      <button *ngIf="vacancy.description?.length > 250"
+              nz-button nzType="dashed" nzSize="small"
+              (click)="isExpandedDescription = !isExpandedDescription">
+        {{ isExpandedDescription ? 'Скрыть' : 'Показать полность' }}
+      </button>
     </div>
     <div nz-col nzSpan="2">
     </div>
