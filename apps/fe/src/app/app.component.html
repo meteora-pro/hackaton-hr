@@ -1,40 +1,39 @@
 <nz-layout class="app-layout">
-  <nz-sider class="menu-sidebar"
-            nzCollapsible
-            nzWidth="256px"
-            nzBreakpoint="md"
-            nzTheme="light"
-            [(nzCollapsed)]="isCollapsed"
-            [nzTrigger]="null">
-    <div class="sidebar-logo">
-      <a routerLink="/">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Hunt U</h1>
-      </a>
+  <nz-header>
+    <div class="logo">
+      <a routerLink="/">Hunt U</a>
     </div>
-    <ul nz-menu nzTheme="light" nzMode="inline">
-      <li *ngFor="let item of navList"
-          nz-menu-item>
-        <i nz-icon [nzType]="item.icon"></i>
-        <a [routerLink]="item.link" routerLinkActive="active">{{ item.title }}</a>
+    <ul nz-menu nzTheme="light" nzMode="horizontal" class="header-menu">
+      <li nz-menu-item>
+        <nz-avatar nzIcon="user"></nz-avatar>
+        <span class="header-menu-username">
+        Александр Разумовский
+        </span>
       </li>
     </ul>
-  </nz-sider>
+  </nz-header>
   <nz-layout>
-    <nz-header>
-      <div class="app-header">
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <i class="trigger"
-               nz-icon
-               [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            ></i>
-        </span>
-      </div>
-    </nz-header>
-    <nz-content>
-      <div class="inner-content">
-        <router-outlet></router-outlet>
-      </div>
-    </nz-content>
+    <nz-sider class="menu-sidebar"
+              nzCollapsible
+              nzWidth="256px"
+              nzBreakpoint="md"
+              nzTheme="light"
+              [(nzCollapsed)]="isCollapsed"
+              [nzTrigger]="null">
+      <ul nz-menu nzTheme="light" nzMode="inline">
+        <li *ngFor="let item of navList"
+            nz-menu-item>
+          <i nz-icon [nzType]="item.icon"></i>
+          <a [routerLink]="item.link" routerLinkActive="active">{{ item.title }}</a>
+        </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+.      <nz-content>
+        <div class="inner-content">
+          <router-outlet></router-outlet>
+        </div>
+      </nz-content>
+    </nz-layout>
   </nz-layout>
 </nz-layout>

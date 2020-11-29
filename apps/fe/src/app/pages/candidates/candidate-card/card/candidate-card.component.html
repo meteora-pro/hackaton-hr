@@ -39,6 +39,9 @@
       </div>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Ключевые навыки">
+      <nz-tag *ngFor="let skill of candidate.skillSet" [nzColor]="'blue'" [title]="skill">
+        {{ skill }}
+      </nz-tag>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Дополнительно">
     </nz-collapse-panel>
