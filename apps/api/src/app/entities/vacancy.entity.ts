@@ -85,4 +85,12 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   @ApiProperty()
   @Column({ nullable: true })
   testUrl: string;
+
+  @ApiProperty()
+  @Column({ default: true })
+  isOwnVacancy: boolean; // Газпромбанка вакансия или нет
+
+  @ApiProperty()
+  @Column({ nullable: true })
+  hhUrl: string;
 }

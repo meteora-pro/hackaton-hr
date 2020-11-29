@@ -12,6 +12,9 @@ import { randomScoring } from './vacancy.controller';
   model: {
     type: CandidateEntity,
   },
+  query: {
+    maxLimit: 30,
+  }
 })
 
 

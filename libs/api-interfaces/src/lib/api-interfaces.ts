@@ -86,6 +86,8 @@ export interface Vacancy {
   closedAt: Date;
   hasTest: boolean;
   testUrl: string;
+  isOwnVacancy: boolean;
+  hhUrl: string;
 }
 
 export interface Candidate {

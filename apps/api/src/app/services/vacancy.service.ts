@@ -26,7 +26,7 @@ export class VacancyService extends TypeOrmCrudService<VacancyEntity> {
 
   async findSimilarCandidates(id: number): Promise<CandidateScoring[]> {
     const result = await this.repository.query(`
-      SELECT c.title, v."keySkills" vs, c."skillSet" cs, c.experiences, c."educationLevel" edu, c.educations, c.languages, c.salary, v.id vid, c.id cid, SIMILARITY(v.name, c.title) distance
+      SELECT c.title, v."salaryFrom", v."salaryTo", v."keySkills" vs, c."skillSet" cs, c.experiences, c."educationLevel" edu, c.educations, c.languages, c.salary, v.id vid, c.id cid, SIMILARITY(v.name, c.title) distance
       from vacancies v LEFT JOIN candidates c ON SIMILARITY(v.name, c.title) > 0.4
       WHERE v.id = $1
       ORDER BY distance DESC
@@ -43,8 +43,10 @@ export interface ScoringResults {
   cs: string[];
   experiences: MarkedExperience[];
   edu: EducationLevelEnum;
-  languages: Language[],
+  languages: Language[];
+  salaryFrom: number;
   salary?: number;
+  salaryTo: number;
   vid: number;
   cid: number;
   distance: number;
@@ -90,19 +92,40 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   }
 
   // Анализ опыта работы
+  let totalDuration = 0;
+  let relevantDuration = 0;
   scoringResults.experiences.forEach( (experience, index) => {
     const maxLen = Math.max(scoringResults.title.length, experience.position.length);
     const distance = (maxLen - levenshtein(scoringResults.title, experience.position)) / maxLen;
     const isLastWork = !experience.end;
-    experience.duration = calculateDurationInYears(!experience?.end ? Date.now() : new Date(experience?.end), new Date(experience.start));
+    const isRelevant = distance > 0.4;
+    const duration = calculateDurationInYears(!experience?.end ? Date.now() : new Date(experience?.end), new Date(experience.start));
+    totalDuration += duration;
+    if (isRelevant) {
+      relevantDuration += duration;
+    }
+    experience.duration = duration;
     experience.betweenDuration = (index + 1) < (scoringResults.experiences.length - 2) ? calculateDurationInYears(
       new Date(experience.start),
       new Date(scoringResults.experiences[index + 1]?.end),
     ) : 0;
-    experience.isRelevant = distance > 0.4;
+    experience.isRelevant = isRelevant;
     experience.distance = distance;
     experience.isLastWork = isLastWork;
   });
+  const relevantPercent = (1 - (totalDuration - relevantDuration)) ;
+  if (relevantPercent < 0.3) {
+    negativeTags.push('Релевантного опыта работы менее 30%');
+  }
+
+  if (relevantPercent > 0.7) {
+    positiveTags.push('Релевантного опыта более 70%')
+  }
+
+  const tooLongDurationExperiences = scoringResults.experiences.filter( experience => experience.betweenDuration > 200 );
+  if (tooLongDurationExperiences.length > 0) {
+    negativeTags.push('')
+  }
 
   return {
     candidate: {

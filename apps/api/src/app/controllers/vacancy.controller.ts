@@ -30,6 +30,9 @@ export function randomScoring(): Scoring {
   model: {
     type: VacancyEntity,
   },
+  query: {
+    maxLimit: 30,
+  }
 })
 @Controller('vacancy')
 export class VacancyController implements CrudController<VacancyEntity> {
