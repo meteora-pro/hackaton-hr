@@ -67,6 +67,7 @@ export class CandidateCardState {
       status: StoreStatus.Loading,
       candidateId: id,
     });
+    ctx.dispatch(new LoadScoringVacancies(0));
     return this.nestCrudService.getEntityById('candidate', id).pipe(
       tap((response: Candidate) => {
         ctx.patchState({

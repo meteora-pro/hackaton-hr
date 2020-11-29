@@ -1,17 +1,76 @@
 <ng-container *ngIf="candidate$ | async as candidate">
-
   <div nz-row>
-    <div nz-col nzSpan="14">
+    <div nz-col nzSpan="16">
       <h1>{{ candidate.title }}</h1>
-      <h2>{{ candidate.fullName || 'Ананимное резюме' }}</h2>
-      <h3>Опыт работы</h3>
-      {{ candidate.experiences | workExperienceYears }}
+      <div nz-row>
+        <div nz-col nzSpan="8">
+          <nz-avatar [nzShape]="'square'" [nzSize]="200" nzIcon="user" nzSrc="https://i.pravatar.cc/300"></nz-avatar>
+        </div>
+        <div nz-col nzSpan="16">
+          <div nz-row>
+            <div nz-col nzSpan="24">
+              <h2>{{ candidate.fullName || 'Ананимное резюме' }}</h2>
+            </div>
+            <div nz-col nzSpan="12">
+              <h3>Опыт работы</h3>
+              {{ candidate.experiences | workExperienceYears }}
+            </div>
+            <div nz-col nzSpan="12">
+              <h3>Контакты</h3>
+              {{ candidate.phone }}
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div nz-col nzSpan="10" style="text-align: right">
-      <button nz-button nzType="default">Взять в работу</button>
-      <button nz-button nzType="default" nzDanger>Отказать кандидату</button>
+    <div nz-col nzSpan="8" style="text-align: right">
+      <button nz-button nzType="default" (click)="isVisibleApproveModal = true">Взять в работу</button>
+      <button nz-button nzType="default" nzDanger  (click)="isVisibleRejectModal = true">Отказать кандидату</button>
     </div>
   </div>
-</ng-container>
+  <br>
+  <nz-collapse>
+    <nz-collapse-panel nzHeader="Опыт работы">
+      <div *ngFor="let item of candidate.experiences">
+        <b>{{ item.position }}</b><br>
+        {{ item.start | date: 'MM.yyyy' }} - {{ item.end | date: 'MM.yyyy' }}
+        <br><br>
+      </div>
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="Ключевые навыки">
+    </nz-collapse-panel>
+    <nz-collapse-panel nzHeader="Дополнительно">
+    </nz-collapse-panel>
+  </nz-collapse>
 
+</ng-container>
+<br>
 <h2>Подходящие кандидаты</h2>
+<vacancy-scoring-list></vacancy-scoring-list>
+
+<nz-modal [(nzVisible)]="isVisibleRejectModal"
+          (nzOnCancel)="handleCancel()"
+          nzTitle="Отказ кандидату">
+  <p>Кандидат получит на почту сообщение об отказе.</p>
+  <textarea nz-input rows="3">Здравствуйте, к сожалению, мы не готовы пригласить вас на собеседование. Благодарим за потраченное время.
+  </textarea>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Отменить</button>
+    <button nz-button nzType="danger" (click)="handleRejectCandidate()">
+      Отправить письмо с отказом
+    </button>
+  </div>
+</nz-modal>
+
+<nz-modal [(nzVisible)]="isVisibleApproveModal"
+          (nzOnCancel)="handleCancel()"
+          nzTitle="Начать работу по кандидату">
+  <p>Статус кандидата изменится на “в работе”. Ваши коллеги будут видеть с какими кандидатами вы работаете.</p>
+  <div *nzModalFooter>
+    <button nz-button nzType="default" (click)="handleCancel()">Отменить</button>
+    <button nz-button nzType="primary" (click)="handleCancel()">
+      Взять в работу
+    </button>
+  </div>
+</nz-modal>

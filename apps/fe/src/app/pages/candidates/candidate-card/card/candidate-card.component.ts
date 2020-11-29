@@ -22,6 +22,9 @@ export class CandidateCardComponent implements OnInit, OnDestroy {
   @Select(CandidateCardState.candidate)
   candidate$: Observable<Candidate>;
 
+  isVisibleRejectModal = false;
+  isVisibleApproveModal = false;
+
   private readonly destroy$ = new Subject<void>();
 
   ngOnInit(): void {
@@ -35,5 +38,14 @@ export class CandidateCardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  handleRejectCandidate() {
+    this.isVisibleRejectModal = false;
+  }
+
+  handleCancel() {
+    this.isVisibleRejectModal = false;
+    this.isVisibleApproveModal = false;
   }
 }
