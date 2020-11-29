@@ -115,6 +115,7 @@ export interface Scoring {
   percent: number;
   matchingSkills: string[];
   additionalSkills: string[];
+  denormalizedPercent?: number;
 }
 
 export interface CandidateScoring {

@@ -19,12 +19,12 @@ export class CandidateService extends TypeOrmCrudService<CandidateEntity> {
     const results = await this.repository.query(`
     SELECT v.name, v."salaryFrom", v.experience, v."vacancyOwner", v."salaryTo", v."keySkills" vs, c."skillSet" cs, c.salary, v.id vid, c.id cid, SIMILARITY(v.name, c.title) distance
     from candidates c LEFT JOIN vacancies v ON SIMILARITY(v.name, c.title) > 0.3
-    WHERE c.id = $1
+    WHERE c.id = $1 AND array_length(v."keySkills", 1) > 0
     ORDER BY distance DESC
     LIMIT 50
     `, [candidateId]);
 
-    return results.map(scoreVacancy).sort((a, b) => b.scoring.percent - a.scoring.percent);
+    return results.map(scoreVacancy).sort((a, b) => b.scoring.denormalizedPercent - a.scoring.denormalizedPercent);
   }
 }
 
@@ -81,12 +81,13 @@ export function scoreVacancy(result: ScoringResult): VacancyScoring {
 
   const positiveCorrection = 1 - scoring;
   const negativeCorrection = scoring;
-
-  const percent = Math.min(Math.floor(scoring - ((negativeCorrection * negativeScoringBalance)/100 + (positiveCorrection * positiveScoringBalance )/100)), 100);
+  const denormalizedPercent = Math.floor(scoring - ((negativeCorrection * negativeScoringBalance)/100 + (positiveCorrection * positiveScoringBalance )/100));
+  const percent = Math.min(denormalizedPercent, 100);
 
   return {
     scoring: {
       percent,
+      denormalizedPercent,
       positiveTags,
       negativeTags,
       matchingSkills,
