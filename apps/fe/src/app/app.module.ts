@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,7 +34,10 @@ registerLocaleData(ru);
     BrowserAnimationsModule,
     NzAvatarModule,
   ],
-  providers: [{ provide: NZ_I18N, useValue: ru_RU }],
+  providers: [
+    { provide: NZ_I18N, useValue: ru_RU },
+    { provide: LOCALE_ID, useValue: 'ru'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
