@@ -6,11 +6,16 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SalaryRangePipe implements PipeTransform {
 
   transform(value: {from: number, to: number}): string {
-    const result = [value.from, value.to].filter(v => !!v).join(' - ');
-    if (!result) {
-      return 'Не указана';
+    switch (true) {
+      case !!value.from && !!value.to:
+        return `${value.from} - ${value.to} ₽`;
+      case !!value.from:
+        return `от ${value.from} ₽`;
+      case !!value.to:
+        return `до ${value.to} ₽`;
+      default:
+        return 'Не указана'
     }
-    return `${result} ₽`;
   }
 
 }

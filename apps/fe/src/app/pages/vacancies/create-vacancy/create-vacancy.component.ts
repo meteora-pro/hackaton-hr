@@ -4,12 +4,12 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { LoadSkills, LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
+import { CreateVacancy, LoadSkills, LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
 import { Observable, Subject } from 'rxjs';
 import { VacancyConstructorState } from '../store/constructor-state/vacancy-constructor.state';
-import { ExperienceEnum } from '@meteora/api-interfaces';
+import { ExperienceEnum, Vacancy } from '@meteora/api-interfaces';
 import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
 
 import isEqual from 'lodash-es/isEqual';
@@ -24,14 +24,13 @@ import isEqual from 'lodash-es/isEqual';
 export class CreateVacancyComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private store: Store) {}
   formGroup = this.fb.group({
-    name: '',
-    vacancyNumber: null,
+    name: ['', Validators.required],
     vacancyOwner: null,
-    experience: null,
+    experience: [null, Validators.required],
     salaryFrom: null,
     salaryTo: null,
-    keySkills: [],
-    description: null,
+    keySkills: [null, Validators.required],
+    description: [null, [Validators.required, Validators.minLength(5)]],
   });
   keySkillOptions = ['React', 'Angular'];
 
@@ -89,7 +88,18 @@ export class CreateVacancyComponent implements OnInit, OnDestroy {
     this.formChangeObserver();
   }
 
-  submitForm() {}
+  submitForm() {
+    for (const i in this.formGroup.controls) {
+      this.formGroup.controls[i].markAsDirty();
+      this.formGroup.controls[i].updateValueAndValidity();
+    }
+
+    if (!this.formGroup.valid) {
+      return;
+    }
+
+    this.store.dispatch(new CreateVacancy(this.formGroup.value as Vacancy));
+  }
 
   onSearch(searchValue: string): void {
     this.store.dispatch(new LoadVacancyTitles(searchValue));

@@ -27,7 +27,7 @@
         TODO
       </td>
       <td>
-        от {{ item.salaryFrom | number }} рублей
+        {{ { from: item.salaryFrom | number, to: item.salaryTo | number } | salaryRange}}
       </td>
     </tr>
     </tbody>
