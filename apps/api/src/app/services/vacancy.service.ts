@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmCrudService } from '@nestjsx/crud-typeorm';
-import difference from 'lodash-es/difference';
-import intersection from 'lodash-es/intersection';
 import { Repository } from 'typeorm';
 import {
   CandidateScoring,
@@ -14,6 +12,7 @@ import {
 } from '../../../../../libs/api-interfaces/src/lib/api-interfaces';
 import { CandidateEntity } from '../entities/candidate.entity';
 import { VacancyEntity } from '../entities/vacancy.entity';
+import { CommonService } from './common/common.service';
 import { levenshtein } from './distance';
 
 @Injectable()
@@ -68,15 +67,20 @@ export function calculateDurationInYears(endDate: Date | number, startDate: Date
 
 export function makeScoringLabels(scoringResults: ScoringResults): CandidateScoring {
   const scoring = Math.floor(scoringResults.distance * 100);
-  const matchingSkills = intersection(scoringResults.cs, scoringResults.vs);
-  const notMatchingSkills = difference(scoringResults.vs, matchingSkills);
-  const additionalSkills = difference(scoringResults.cs, matchingSkills);
+  const matchingSkills = CommonService.intersection(scoringResults.cs, scoringResults.vs);
+  const notMatchingSkills = CommonService.difference(scoringResults.vs, matchingSkills);
+  const additionalSkills = CommonService.difference(scoringResults.cs, matchingSkills);
   const positiveTags = [];
   const negativeTags = [];
 
+  let positiveScoringBalance = 0;
+  let negativeScoringBalance = 0;
+
   if (notMatchingSkills.length) {
+    positiveScoringBalance += 10;
     positiveTags.push('Присутвуют все ключевые навыки');
   } else {
+    negativeScoringBalance += 10;
     negativeTags.push(`Отсутсвуют ключевые навыки: ${notMatchingSkills.join(', ')}`)
   }
 
@@ -88,6 +92,7 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
     || foundLanguage?.level === LanguageLevelEnum.C1
     || foundLanguage?.level === LanguageLevelEnum.NATIVE
   ) {
+    positiveScoringBalance += 3;
     positiveTags.push(`Хороший уровень знания Английского языка: ${foundLanguage.level}`);
   }
 
@@ -115,17 +120,27 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   });
   const relevantPercent = (1 - (totalDuration - relevantDuration)) ;
   if (relevantPercent < 0.3) {
+    negativeScoringBalance += 7;
     negativeTags.push('Релевантного опыта работы менее 30%');
   }
 
   if (relevantPercent > 0.7) {
+    positiveScoringBalance += 7;
     positiveTags.push('Релевантного опыта более 70%')
   }
 
   const tooLongDurationExperiences = scoringResults.experiences.filter( experience => experience.betweenDuration > 200 );
   if (tooLongDurationExperiences.length > 0) {
-    negativeTags.push('')
+    negativeScoringBalance += 5;
+    negativeTags.push(`Есть перерывы между местами работы более 200 дней: ${tooLongDurationExperiences.map(experience => `${experience.position}(${experience.betweenDuration} д.)`).join(', ')}`)
   }
+
+  if (tooLongDurationExperiences.length === 0) {
+    positiveScoringBalance += 1;
+    positiveTags.push(`Нет больших перерывов между местами работы`);
+  }
+
+  const percent = Math.max((positiveScoringBalance - negativeScoringBalance) + scoring, 100);
 
   return {
     candidate: {
@@ -133,7 +148,7 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
       experiences: scoringResults.experiences,
     } as unknown as CandidateEntity,
     scoring: {
-      percent: scoring,
+      percent,
       positiveTags,
       negativeTags,
       matchingSkills,
