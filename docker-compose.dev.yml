@@ -12,19 +12,6 @@ services:
       - ${POSTGRES_PORT}:5432
     networks:
       base_network:
-#  minio:
-#    image: minio/minio
-#    ports:
-#      - "9000:9000"
-#    command: server /data
-#    environment:
-#      MINIO_ACCESS_KEY: AKIAIOSFODNN7
-#      MINIO_SECRET_KEY: wJalrXUtnFEMI2K7MDENGsbPxRfiCY
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-#      interval: 30s
-#      timeout: 20s
-#      retries: 3
 
 
 networks:
