@@ -18,6 +18,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 const routes: Routes = [
   {
@@ -42,7 +43,8 @@ const routes: Routes = [
     NzInputModule,
     NzAvatarModule,
     NzCollapseModule,
-    NzTimelineModule
+    NzTimelineModule,
+    NzEmptyModule
   ],
   declarations: [
     CandidateCardComponent,
