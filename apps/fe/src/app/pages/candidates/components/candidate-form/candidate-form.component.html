@@ -101,11 +101,8 @@
   <nz-form-item>
     <nz-form-control [nzSpan]="8">
       <button nz-button nzType="primary">Создать</button>
-      <button nz-button>Отмена</button>
+      <a nz-button nzType="link" routerLink="/candidates/list">Отмена</a>
     </nz-form-control>
   </nz-form-item>
 
 </form>
-<pre>
-  {{ formGroup.value | json }}
-</pre>
