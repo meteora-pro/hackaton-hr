@@ -76,10 +76,10 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   let positiveScoringBalance = 0;
   let negativeScoringBalance = 0;
 
-  if (notMatchingSkills.length) {
+  if (notMatchingSkills.length === 0 && matchingSkills.length > 0) {
     positiveScoringBalance += 30;
     positiveTags.push('Присутвуют все ключевые навыки');
-  } else {
+  } else if (scoringResults.vs.length > 0) {
     negativeScoringBalance += 20;
     negativeTags.push(`Отсутсвуют ключевые навыки: ${notMatchingSkills.join(', ')}`)
   }
@@ -129,13 +129,13 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
     positiveTags.push('Релевантного опыта более 70%')
   }
 
-  const tooLongDurationExperiences = scoringResults.experiences.filter( experience => experience.betweenDuration > 200 );
-  if (tooLongDurationExperiences.length > 0) {
+  const tooLongDurationExperiences = scoringResults.experiences?.filter( experience => experience.betweenDuration > 200 );
+  if (tooLongDurationExperiences?.length > 0) {
     negativeScoringBalance += 5;
-    negativeTags.push(`Есть перерывы между местами работы более 200 дней: ${tooLongDurationExperiences.map(experience => `${experience.position}(${experience.betweenDuration} д.)`).join(', ')}`)
+    negativeTags.push(`Есть перерывы между местами работы более 200 дней: ${tooLongDurationExperiences?.map(experience => `${experience.position}(${experience.betweenDuration} д.)`).join(', ')}`)
   }
 
-  if (tooLongDurationExperiences.length === 0) {
+  if (tooLongDurationExperiences?.length === 0) {
     positiveScoringBalance += 1;
     positiveTags.push(`Нет больших перерывов между местами работы`);
   }

@@ -23,6 +23,7 @@
 1. База данных [Postgres](https://www.postgresql.org/)
 1. Контейниризация [Docker](https://www.docker.com/get-started)
 1. Деплой [Kubernetes](https://kubernetes.io/ru/), [Helm](https://helm.sh/), [Gitlab CI/CD](https://docs.gitlab.com/ee/ci/)
+1. Для ML использовался [python](https://www.python.org/) и [jupyter notebooks](https://jupyter.org/)
 
 # Как запустить в режиме разработки
 1. Нужны nodejs, npm, docker
@@ -39,6 +40,7 @@
 1. config/ - .env файлы для бэкенд сервисов
 1. deploy/ - docker файлы и конфиги для деплоя в kubernetes
 1. libs/ - исходных код для общих библиотек в проекте
+1. ml-sandbox/ - код на python для сбора данных и эксперементы с модельками
 
 # Как добавить миграцию
 установить tsnode глобально:
@@ -48,3 +50,13 @@
 `npm run typeorm -- migration:generate -n MigrationName`
 
 Добавить созданную миграцию в массив с миграциями (all.migations.ts)
+
+# Аналитика и ML
+Все наработки в том числе сбор данных лежит в папке
+/ml-sandbox
+
+Были попытки использовать модели [fasttext](https://fasttext.cc/) и [tfidf](https://ru.wikipedia.org/wiki/TF-IDF), работающую модель собрать не получилось, поэтому матчинг делается по расстояние левенштейна по ключевым словам и так же проводится ручной параметрический и частотный анализ данных и их оценка.
+
+Предиктивная система конструктора построена на частотном анализе и анализе расстояния левенштейна
+
+Все датасеты деперсонализированы и получены из открытых источников.

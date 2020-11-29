@@ -15,6 +15,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 
 const routes: Routes = [
   {
@@ -36,7 +37,8 @@ const routes: Routes = [
     NzGridModule,
     NzTagModule,
     NzTypographyModule,
-    NzIconModule
+    NzIconModule,
+    NzEmptyModule
   ],
   declarations: [VacancyCardComponent, CandidateScoringListComponent, ScoringModalComponent],
 })
