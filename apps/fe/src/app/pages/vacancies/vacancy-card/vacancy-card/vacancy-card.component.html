@@ -13,6 +13,13 @@
          nzType="secondary">
       <p>№ {{ vacancy.vacancyNumber || vacancy.id }}</p>
       <p>{{ vacancy.vacancyOwner }}</p>
+      <a *ngIf="vacancy.hhUrl"
+         [href]="vacancy.hhUrl" target="_blank">
+        <nz-tag nzColor="default" style="cursor: pointer">
+          <i nz-icon nzType="link" nzTheme="outline"></i>
+          Посмотреть на hh.tu
+        </nz-tag>
+      </a>
     </div>
   </div>
   <br>
