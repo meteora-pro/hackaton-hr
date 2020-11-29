@@ -20,7 +20,8 @@
       </nz-tag>
     </td>
     <td>
-      от {{ item.salary | number }} рублей
+      <span *ngIf="!item.salary">Не указана</span>
+      <span *ngIf="item.salary">от {{ item.salary | number }} рублей</span>
     </td>
   </tr>
   </tbody>
