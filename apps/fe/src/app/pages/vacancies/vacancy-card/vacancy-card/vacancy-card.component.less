@@ -1,13 +1,23 @@
-.priority {
-  &__primary {
-    color: rgba(163, 43, 43, 1);
+.vacation-description {
+  height: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  &.expanded {
+    overflow: visible;
+    height: auto;
+    &::before {
+      content: none;
+    }
   }
-
-  &__medium {
-    color: rgba(245, 152, 78, 1);
-  }
-
-  &__low {
-    color: rgba(35, 156, 61, 1);
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 27px;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+    pointer-events: none;
   }
 }

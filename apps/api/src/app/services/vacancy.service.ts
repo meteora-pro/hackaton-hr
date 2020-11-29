@@ -77,10 +77,10 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   let negativeScoringBalance = 0;
 
   if (notMatchingSkills.length) {
-    positiveScoringBalance += 10;
+    positiveScoringBalance += 30;
     positiveTags.push('Присутвуют все ключевые навыки');
   } else {
-    negativeScoringBalance += 10;
+    negativeScoringBalance += 20;
     negativeTags.push(`Отсутсвуют ключевые навыки: ${notMatchingSkills.join(', ')}`)
   }
 
@@ -140,12 +140,34 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
     positiveTags.push(`Нет больших перерывов между местами работы`);
   }
 
-  const percent = Math.max((positiveScoringBalance - negativeScoringBalance) + scoring, 100);
+  if (scoringResults.salary) {
+    if (scoringResults.salaryTo && scoringResults.salaryFrom
+      && scoringResults.salary < scoringResults.salaryTo
+    ) {
+      if (scoringResults.salary > scoringResults.salaryFrom) {
+        positiveScoringBalance += 5;
+        positiveTags.push('Зарплатная вилка соответсвует ожиданиям кандидата');
+      } else {
+        positiveScoringBalance += 10;
+        positiveTags.push('Мы можем предложить кандидату больше чем он ожидает');
+      }
+    }
+    if (scoringResults.salaryTo && scoringResults.salary > scoringResults.salaryTo) {
+      negativeScoringBalance += 20;
+      negativeTags.push('Кандидат ожидает большем чем мы ему можем предложить');
+    }
+  }
+
+  const positiveCorrection = 1 - scoring;
+  const negativeCorrection = scoring;
+
+  const percent = Math.min(Math.floor(scoring - (negativeCorrection * negativeScoringBalance)/ 100 + (positiveCorrection * positiveScoringBalance ) /100), 100);
 
   return {
     candidate: {
       title: scoringResults.title,
       experiences: scoringResults.experiences,
+      id: scoringResults.cid,
     } as unknown as CandidateEntity,
     scoring: {
       percent,
