@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { Crud, CrudController } from '@nestjsx/crud';
 import { ApiTags } from '@nestjs/swagger';
 import { CandidateScoring, Scoring } from '../../../../../libs/api-interfaces/src/lib/api-interfaces';
@@ -41,13 +41,19 @@ export class VacancyController implements CrudController<VacancyEntity> {
 
   @Get('/:id/matched')
   async matchCandidates(
-    @Query('take') take = 25,
+    @Param('id') id: number,
+    @Query('limit') take = 25,
     @Query('skip') skip = 0,
+    @Query('page') page = 0,
   ): Promise<CandidateScoring[]> {
+    if (!skip && page !== 0) {
+      skip = page * take;
+    }
     const candidates = await this.candidateService.find({take: Math.max(take, 30), skip});
     return candidates.map( candidate => ({
       candidate,
       scoring: randomScoring(),
     })).sort((a,b) => b.scoring.percent - a.scoring.percent);
+    // return this.service.findSimilarCandidates(id);
   }
 }

@@ -1,1 +1,17 @@
-<p>card works!</p>
+<ng-container *ngIf="candidate$ | async as candidate">
+
+  <div nz-row>
+    <div nz-col nzSpan="14">
+      <h1>{{ candidate.title }}</h1>
+      <h2>{{ candidate.fullName || 'Ананимное резюме' }}</h2>
+      <h3>Опыт работы</h3>
+      {{ candidate.experiences | workExperienceYears }}
+    </div>
+    <div nz-col nzSpan="10" style="text-align: right">
+      <button nz-button nzType="default">Взять в работу</button>
+      <button nz-button nzType="default" nzDanger>Отказать кандидату</button>
+    </div>
+  </div>
+</ng-container>
+
+<h2>Подходящие кандидаты</h2>

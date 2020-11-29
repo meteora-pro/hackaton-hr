@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LoadCandidateById } from '../candidate-card.actions';
+import { CandidateCardState } from '../candidate-card.state';
+import { Candidate } from '@meteora/api-interfaces';
 
 @Component({
   selector: 'meteora-candidate-card',
@@ -16,6 +18,9 @@ export class CandidateCardComponent implements OnInit, OnDestroy {
   constructor(private store: Store,
               private route: ActivatedRoute,
   ) { }
+
+  @Select(CandidateCardState.candidate)
+  candidate$: Observable<Candidate>;
 
   private readonly destroy$ = new Subject<void>();
 

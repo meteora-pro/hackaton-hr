@@ -1,0 +1,29 @@
+.scoring-reasons {
+  margin: 20px -20px -20px;
+  background-color: #F7F9FB;
+  padding-top: 20px;
+  ul {
+    list-style: none;
+    li {
+      display: flex;
+      justify-content: flex-start;
+      align-items: baseline;
+      margin-bottom: 12px;
+      i {
+        top: 2px;
+        position: relative;
+      }
+      span {
+        padding-left: 5px;
+      }
+    }
+    ::ng-deep {
+      svg[data-icon='plus'] path {
+        fill: #239C3D;
+      }
+      svg[data-icon='minus'] path {
+        fill: #A32B2B;
+      }
+    }
+  }
+}

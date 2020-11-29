@@ -119,3 +119,8 @@ export interface CandidateScoring {
   candidate: Candidate,
   scoring: Scoring,
 }
+
+export interface VacancyScoring {
+  vacancy: Vacancy,
+  scoring: Scoring,
+}
