@@ -85,7 +85,7 @@ export class CandidateCardState {
     ctx.patchState({
       paginationStatus: StoreStatus.Loading,
     });
-    return this.nestCrudService.getEntities<VacancyScoring>(`vacancy/${state.candidateId}/matched`, {
+    return this.nestCrudService.getEntities<VacancyScoring>(`candidate/${state.candidateId}/matched`, {
       page: page || state.pagination.page,
       limit: state.perPage,
     }).pipe(
