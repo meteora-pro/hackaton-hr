@@ -38,6 +38,7 @@ type Ctx = StateContext<VacancyCardStateModel>;
     },
   }
 })
+
 @Injectable()
 export class VacancyCardState {
 

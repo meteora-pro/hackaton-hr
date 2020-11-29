@@ -12,7 +12,7 @@
     >
       <span>Должность</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12" nzErrorTip="Некорректное значение">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Укажите должность">
       <nz-select
         nzMode="default"
         nzPlaceHolder="Начните вводить значения"
@@ -38,10 +38,11 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label nzFor="experience">
+    <nz-form-label nzFor="experience"
+                   nzRequired>
       <span>Требуемый опыт</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Укажите опыт">
       <nz-select
         id="experience"
         formControlName="experience"
@@ -99,11 +100,12 @@
   <nz-form-item>
     <nz-form-label
       nzFor="skills"
+      nzRequired
       nzTooltipTitle="Можно выбрать предложенные навыки или указать те, которых нет в списке. Со временем мы будем точнее предлагать релевантные навыки"
     >
       <span>Навыки</span>
     </nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-control [nzSpan]="12" nzErrorTip="Укажите навыки">
       <nz-select
         id="skills"
         formControlName="keySkills"
@@ -129,8 +131,12 @@
   </nz-form-item>
 
   <nz-form-item>
-    <nz-form-label>Обязанности</nz-form-label>
-    <nz-form-control [nzSpan]="12">
+    <nz-form-label
+      nzRequired
+      nzTooltipTitle="Укажите описание вакансии, расскажите о компании, должности, будущей роли кандидата и опишите то, чем ему предстоит заниматься"
+      >Описание вакансии и обязанности</nz-form-label
+    >
+    <nz-form-control [nzSpan]="12" nzErrorTip="Укажите обязанности">
       <textarea
         [nzAutosize]="{ minRows: 6 }"
         formControlName="description"
@@ -164,27 +170,12 @@
     </nz-form-control>
   </nz-form-item>
 
-  <nz-form-item>
-    <nz-form-label [nzSpan]="12" nzFor="vacancyNumber"
-      >Номер вакансии</nz-form-label
-    >
-    <nz-form-control [nzSpan]="12">
-      <input
-        nz-input
-        id="vacancyNumber"
-        formControlName="vacancyNumber"
-        placeholder="№"
-      />
-    </nz-form-control>
-  </nz-form-item>
-
-  <nz-form-item>
-    <nz-form-control [nzSpan]="8">
+  <div nz-row>
+    <div nz-col [nzSpan]="4">
       <button nz-button nzType="primary">Опубликовать</button>
+    </div>
+    <div nz-col [nzSpan]="4">
       <button nz-button>Отмена</button>
-    </nz-form-control>
-  </nz-form-item>
+    </div>
+  </div>
 </form>
-<pre>
-  {{ formGroup.value | json }}
-</pre>

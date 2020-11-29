@@ -1,5 +1,5 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { CreateVacancy, LoadVacancies } from './vacancy.actions';
+import {  LoadVacancies } from './vacancy.actions';
 import { NestPaginationResponse } from '../../../shared/models/pagination';
 import { Vacancy } from '@meteora/api-interfaces';
 import { StoreStatus } from '../../../shared/models/store.status.enum';
@@ -8,6 +8,7 @@ import { NestCrudService } from '../../../shared/services/nest-crud.service';
 import { Injectable } from '@angular/core';
 import { VacancyConstructorState } from './constructor-state/vacancy-constructor.state';
 import { VacancyCardState } from '../vacancy-card/vacancy-card.state';
+import { CreateVacancy } from './constructor-state/vacancy-constructor.actions';
 
 export interface VacancyStateModel {
   pagination: NestPaginationResponse<Vacancy>,
@@ -79,11 +80,6 @@ export class VacancyState {
         })
       })
     );
-  }
-
-  @Action(CreateVacancy)
-  public add(ctx: Ctx, { vacancy }: CreateVacancy) {
-    return this.nestCrudService.addItem('vacancy', vacancy);
   }
 
 }

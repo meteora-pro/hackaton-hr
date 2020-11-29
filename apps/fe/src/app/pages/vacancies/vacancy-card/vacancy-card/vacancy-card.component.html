@@ -3,7 +3,7 @@
     <div nz-col nzSpan="10">
       <h1>{{ vacancy.name }}</h1>
       <p>
-        Заработная плата <b>{{ { start: vacancy.salaryFrom | number, to: vacancy.salaryTo | number } | salaryRange}}</b>
+        Заработная плата <b>{{ { from: vacancy.salaryFrom | number, to: vacancy.salaryTo | number } | salaryRange}}</b>
       </p>
     </div>
     <div nz-col nzSpan="2">
@@ -11,7 +11,7 @@
     <div nz-col nzSpan="12" style="text-align: right"
          nz-typography
          nzType="secondary">
-      <p>№ {{ vacancy.vacancyNumber }}</p>
+      <p>№ {{ vacancy.vacancyNumber || vacancy.id }}</p>
       <p>{{ vacancy.vacancyOwner }}</p>
     </div>
   </div>

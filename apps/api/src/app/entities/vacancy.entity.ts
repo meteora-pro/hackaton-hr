@@ -51,11 +51,11 @@ export class VacancyEntity extends BaseEntity implements Vacancy {
   name: string;
 
   @ApiProperty()
-  @Column()
+  @Column({default: () => 'CURRENT_TIMESTAMP'})
   publishedAt: Date;
 
   @ApiProperty()
-  @Column()
+  @Column({default: true})
   responseLetterRequired: boolean;
 
   @ApiProperty()
