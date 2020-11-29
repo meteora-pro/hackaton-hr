@@ -13,6 +13,10 @@ import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 
 const routes: Routes = [
   {
@@ -32,7 +36,11 @@ const routes: Routes = [
     NzProgressModule,
     NzTableModule,
     NzTagModule,
-    NzIconModule
+    NzIconModule,
+    NzModalModule,
+    NzInputModule,
+    NzAvatarModule,
+    NzCollapseModule
   ],
   declarations: [
     CandidateCardComponent,
