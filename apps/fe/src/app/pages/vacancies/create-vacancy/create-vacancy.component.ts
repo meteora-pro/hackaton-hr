@@ -6,14 +6,23 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { CreateVacancy, LoadSkills, LoadVacancyTitles } from '../store/constructor-state/vacancy-constructor.actions';
+import {
+  CreateVacancy,
+  LoadSkills,
+  LoadVacancyTitles,
+} from '../store/constructor-state/vacancy-constructor.actions';
 import { Observable, Subject } from 'rxjs';
 import { VacancyConstructorState } from '../store/constructor-state/vacancy-constructor.state';
 import { ExperienceEnum, Vacancy } from '@meteora/api-interfaces';
-import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 
 import isEqual from 'lodash-es/isEqual';
-
 
 @Component({
   selector: 'meteora-create-vacancy',
@@ -73,9 +82,11 @@ export class CreateVacancyComponent implements OnInit, OnDestroy {
   @Select(VacancyConstructorState.isTitleLoad)
   public isTitleLoad$: Observable<boolean>;
 
-
   @Select(VacancyConstructorState.skills)
-  public skills$: Observable<string[]>;
+  public skills$: Observable<{ name: string; preset: boolean }[]>;
+
+  @Select(VacancyConstructorState.presetSkills)
+  public presetSkills$: Observable<string[]>;
 
   @Select(VacancyConstructorState.isSkillsLoad)
   public isSkillsLoad$: Observable<boolean>;
@@ -86,6 +97,7 @@ export class CreateVacancyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formChangeObserver();
+    this.presetChangeObserver();
   }
 
   submitForm() {
@@ -106,17 +118,35 @@ export class CreateVacancyComponent implements OnInit, OnDestroy {
   }
 
   private formChangeObserver() {
-    this.formGroup.valueChanges.pipe(
-      takeUntil(this.destroy$),
-      map(formValue => ({name: formValue.name, experience: formValue.experience})),
-      distinctUntilChanged(isEqual),
-      filter(({ name, experience }) => !!name && !!experience),
-      tap(({ name, experience }) => this.store.dispatch(new LoadSkills(name, experience)))
-    ).subscribe();
+    this.formGroup.valueChanges
+      .pipe(
+        takeUntil(this.destroy$),
+        map((formValue) => ({
+          name: formValue.name,
+          experience: formValue.experience,
+        })),
+        distinctUntilChanged(isEqual),
+        filter(({ name, experience }) => !!name && !!experience),
+        tap(({ name, experience }) =>
+          this.store.dispatch(new LoadSkills(name, experience))
+        )
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private presetChangeObserver() {
+    this.presetSkills$
+      .pipe(
+        takeUntil(this.destroy$),
+        distinctUntilChanged(isEqual),
+        filter((skills) => skills && !!skills.length),
+        tap(skills => this.formGroup.get('keySkills').setValue(skills))
+      )
+      .subscribe();
   }
 }

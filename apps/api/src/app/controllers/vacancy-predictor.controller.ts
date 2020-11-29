@@ -16,7 +16,7 @@ export class VacancyPredictorController {
 
   @ApiBody({type: RequestSkillsDto})
   @Post('vacancies-skills')
-  getVacanciesSkills(@Body() skillsBody: RequestSkillsDto): Promise<string[]> {
+  getVacanciesSkills(@Body() skillsBody: RequestSkillsDto): Promise<{ name: string, preset: boolean }[]> {
     return this.service.getSkillsMap(skillsBody.title, skillsBody.experience);
   }
 }

@@ -119,8 +119,8 @@
         <ng-container *ngFor="let skill of skills$ | async; trackBy: trackByFn">
           <nz-option
             *ngIf="!(isSkillsLoad$ | async)"
-            [nzValue]="skill"
-            [nzLabel]="skill"
+            [nzValue]="skill.name"
+            [nzLabel]="skill.name"
           ></nz-option>
         </ng-container>
         <nz-option *ngIf="isSkillsLoad$ | async" nzDisabled nzCustomContent>

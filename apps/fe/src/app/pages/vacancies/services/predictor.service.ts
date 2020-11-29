@@ -24,8 +24,8 @@ export class PredictorService {
   public getSkills(
     name: string,
     experience: ExperienceEnum
-  ): Observable<string[]> {
-    return this.http.post<string[]>(
+  ): Observable<{ name: string, preset: boolean }[]> {
+    return this.http.post<{ name: string, preset: boolean }[]>(
       `${this.apiUrl}/vacancy-predictor/vacancies-skills`,
       {
         title: name,
