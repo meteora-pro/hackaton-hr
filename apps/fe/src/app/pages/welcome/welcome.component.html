@@ -1,1 +1,136 @@
-<h1>is a welcome!</h1>
+<h1>Данные по вакансиям и кандидатам</h1>
+
+<div class="cards__container">
+  <nz-card nzHoverable class="cards__card">
+    <div class="cards__content">
+      <img
+        alt="logo"
+        style="max-width: 108px"
+        src="./assets/svg/active-vacancy-logo.svg"
+      />
+      <h1 class="cards__counter">50</h1>
+      <span class="cards__title">активных вакансий</span>
+    </div>
+  </nz-card>
+
+  <nz-card nzHoverable class="cards__card">
+    <div class="cards__content">
+      <img
+        alt="logo"
+        style="max-width: 108px"
+        src="./assets/svg/candidates-logo.svg"
+      />
+      <h1 class="cards__counter">100</h1>
+      <span class="cards__title">кандидатов в работе</span>
+    </div>
+  </nz-card>
+
+  <nz-card nzHoverable class="cards__card">
+    <div class="cards__content">
+      <img
+        alt="logo"
+        style="max-width: 108px"
+        src="./assets/svg/relative-candidates.svg"
+      />
+      <h1 class="cards__counter">343</h1>
+      <span class="cards__title">подходящих кандидата</span>
+    </div>
+  </nz-card>
+</div>
+
+<h2 style="margin-top: 24px">Новые кандидаты</h2>
+<nz-table
+  #candidateTable
+  [nzData]="candidates$ | async"
+  [nzFrontPagination]="false"
+  [nzShowPagination]="false"
+  [nzLoading]="candidatesLoading"
+>
+  <thead>
+    <tr>
+      <th>Должность</th>
+      <th style="min-width: 150px">Опыт работы</th>
+      <th style="min-width: 230px">Последнее место работы</th>
+      <th>Ключевые навыки</th>
+      <th style="min-width: 230px">Зарплата</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of candidateTable.data">
+      <td>
+        <a [routerLink]="['/candidate', item.id]">{{ item.title }}</a>
+      </td>
+      <td>{{ item.experiences | workExperienceYears }}</td>
+      <td>{{ item.experiences | lastWork }}</td>
+      <td>
+        <nz-tag
+          *ngFor="let skill of item.skillSet.slice(0, 10)"
+          [nzColor]="'blue'"
+          [title]="skill"
+        >
+          {{ skill }}
+        </nz-tag>
+      </td>
+      <td>от {{ item.salary | number }} рублей</td>
+    </tr>
+  </tbody>
+</nz-table>
+<button
+  nz-button
+  nzType="default"
+  style="margin-top: 16px"
+  routerLink="/candidates/list"
+  nzBlock
+>
+  Смотреть всех кандидатов
+</button>
+
+<h2 style="margin-top: 24px">Новые вакансии</h2>
+<ng-container>
+  <nz-table
+    #vacancyTable
+    [nzData]="vacancies$ | async"
+    [nzFrontPagination]="false"
+    [nzShowPagination]="false"
+    [nzLoading]="vacanciesLoading"
+  >
+    <thead>
+      <tr>
+        <th>Должность</th>
+        <th>Опыт работы</th>
+        <th>Дата открытия</th>
+        <th>Приоритет</th>
+        <th>Зарплата</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of vacancyTable.data">
+        <td>
+          <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
+        </td>
+        <td>{{ item.experience | needExperience }}</td>
+        <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
+        <td>
+          <span [class]="getPriorityClass(item.name)">
+            {{ getPriorityMock(item.name) }}
+          </span>
+        </td>
+        <td style="min-width: 150px">
+          {{
+            { from: item.salaryFrom | number, to: item.salaryTo | number }
+              | salaryRange
+          }}
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  <button
+    nz-button
+    nzType="default"
+    style="margin-top: 16px"
+    routerLink="/vacancies"
+    nzBlock
+  >
+    Смотреть все вакансии
+  </button>
+</ng-container>
