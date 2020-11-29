@@ -76,10 +76,10 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   let positiveScoringBalance = 0;
   let negativeScoringBalance = 0;
 
-  if (notMatchingSkills.length) {
+  if (notMatchingSkills.length === 0 && matchingSkills.length > 0) {
     positiveScoringBalance += 30;
     positiveTags.push('Присутвуют все ключевые навыки');
-  } else {
+  } else if (scoringResults.vs.length > 0) {
     negativeScoringBalance += 20;
     negativeTags.push(`Отсутсвуют ключевые навыки: ${notMatchingSkills.join(', ')}`)
   }
@@ -161,12 +161,13 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
   const positiveCorrection = 1 - scoring;
   const negativeCorrection = scoring;
 
-  const percent = Math.max(Math.floor(scoring - (negativeCorrection * negativeScoringBalance) + (positiveCorrection * positiveScoringBalance )), 100);
+  const percent = Math.min(Math.floor(scoring - (negativeCorrection * negativeScoringBalance)/ 100 + (positiveCorrection * positiveScoringBalance ) /100), 100);
 
   return {
     candidate: {
       title: scoringResults.title,
       experiences: scoringResults.experiences,
+      id: scoringResults.cid,
     } as unknown as CandidateEntity,
     scoring: {
       percent,
