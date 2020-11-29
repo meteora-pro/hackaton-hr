@@ -6,30 +6,47 @@
   </div>
   <div nz-col nzSpan="9">
     <p nz-typography nzType="secondary">Совпадающие</p>
-    <nz-tag *ngFor="let skill of candidateScoring.scoring.matchingSkills"
-            [nzColor]="'blue'">{{ skill }}</nz-tag>
+    <ng-conainer *ngIf="candidateScoring.scoring.matchingSkills?.length; else emptyTagsTmpl">
+      <nz-tag *ngFor="let skill of candidateScoring.scoring.matchingSkills"
+              [nzColor]="'blue'">{{ skill }}</nz-tag>
+    </ng-conainer>
   </div>
   <div nz-col nzSpan="9">
     <p nz-typography nzType="secondary">Дополнительные навыки из резюме</p>
-    <nz-tag *ngFor="let skill of candidateScoring.scoring.additionalSkills"
-            [nzColor]="'geekblue'">{{ skill }}</nz-tag>
+    <ng-conainer *ngIf="candidateScoring.scoring.additionalSkills?.length; else emptyTagsTmpl">
+      <nz-tag *ngFor="let skill of candidateScoring.scoring.additionalSkills"
+              [nzColor]="'geekblue'">{{ skill }}</nz-tag>
+    </ng-conainer>
   </div>
 </div>
 <div nz-row class="scoring-reasons">
   <div nz-col nzSpan="12">
-    <ul>
-      <li *ngFor="let item of candidateScoring.scoring.positiveTags">
-        <i nz-icon [nzType]="'plus'"></i>
-        <span>{{ item }}</span>
-      </li>
-    </ul>
+    <ng-conainer *ngIf="candidateScoring.scoring.positiveTags?.length; else emptyPositiveOrNegativeTmpl">
+      <ul>
+        <li *ngFor="let item of candidateScoring.scoring.positiveTags">
+          <i nz-icon [nzType]="'plus'"></i>
+          <span>{{ item }}</span>
+        </li>
+      </ul>
+    </ng-conainer>
   </div>
   <div nz-col nzSpan="12">
-    <ul>
-      <li *ngFor="let item of candidateScoring.scoring.negativeTags">
-        <i nz-icon [nzType]="'minus'"></i>
-        <span>{{ item }}</span>
-      </li>
+    <ng-conainer *ngIf="candidateScoring.scoring.negativeTags?.length; else emptyPositiveOrNegativeTmpl">
+      <ul>
+        <li *ngFor="let item of candidateScoring.scoring.negativeTags">
+          <i nz-icon [nzType]="'minus'"></i>
+          <span>{{ item }}</span>
+        </li>
     </ul>
+    </ng-conainer>
   </div>
 </div>
+
+<ng-template #emptyTagsTmpl>
+  Нет совпадающих тегов
+</ng-template>
+
+<ng-template #emptyPositiveOrNegativeTmpl>
+  <nz-empty nzNotFoundImage="simple"></nz-empty>
+  <br>
+</ng-template>
