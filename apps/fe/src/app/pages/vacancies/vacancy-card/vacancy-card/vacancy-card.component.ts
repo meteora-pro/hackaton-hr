@@ -21,6 +21,7 @@ export class VacancyCardComponent implements OnInit, OnDestroy {
 
   @Select(VacancyCardState.vacancy)
   vacancy$: Observable<Vacancy>;
+  isExpandedDescription = false;
 
   private readonly destroy$ = new Subject<void>();
 
