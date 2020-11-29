@@ -111,7 +111,7 @@
         formControlName="keySkills"
         nzMode="tags"
         [nzPlaceHolder]="
-          (skills$ | async).length
+          (skills$ | async)?.length
             ? 'Нажмите чтобы увидеть навыки'
             : 'Укажите должность и опыт, чтобы увидеть навыки'
         "

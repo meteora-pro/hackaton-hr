@@ -24,9 +24,12 @@
       <td>{{ item.experience | needExperience }}</td>
       <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
       <td>
-        TODO
+        <span [class]="getPriorityClass(item.name)">
+           {{getPriorityMock(item.name)}}
+        </span>
+
       </td>
-      <td>
+      <td style="min-width: 150px;">
         {{ { from: item.salaryFrom | number, to: item.salaryTo | number } | salaryRange}}
       </td>
     </tr>
