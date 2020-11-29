@@ -158,7 +158,10 @@ export function makeScoringLabels(scoringResults: ScoringResults): CandidateScor
     }
   }
 
-  const percent = Math.max((positiveScoringBalance - negativeScoringBalance) + scoring, 100);
+  const positiveCorrection = 1 - scoring;
+  const negativeCorrection = scoring;
+
+  const percent = Math.max(Math.floor(scoring - (negativeCorrection * negativeScoringBalance) + (positiveCorrection * positiveScoringBalance )), 100);
 
   return {
     candidate: {
