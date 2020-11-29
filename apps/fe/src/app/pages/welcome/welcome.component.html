@@ -56,7 +56,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of candidateTable.data">
+    <tr *ngFor="let item of candidateTable.data"   [routerLink]="['/candidate', item.id]" class="clickable-row">
       <td>
         <a [routerLink]="['/candidate', item.id]">{{ item.title }}</a>
       </td>
@@ -107,7 +107,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of vacancyTable.data">
+      <tr *ngFor="let item of vacancyTable.data"    [routerLink]="['/vacancy', item.id]" class="clickable-row">
         <td>
           <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
         </td>
