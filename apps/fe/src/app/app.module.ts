@@ -14,6 +14,7 @@ import { ru_RU } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import ru from '@angular/common/locales/ru';
 import { CoreModule } from './core/core.module';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 registerLocaleData(ru);
 
@@ -31,6 +32,7 @@ registerLocaleData(ru);
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    NzAvatarModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: ru_RU }],
   bootstrap: [AppComponent]
