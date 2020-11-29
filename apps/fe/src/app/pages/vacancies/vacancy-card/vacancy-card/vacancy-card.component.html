@@ -19,16 +19,14 @@
   <div nz-row>
     <div nz-col nzSpan="10">
       <h3>Чем предстоит заниматься</h3>
-      <p>
-        {{ vacancy.description }}
-      </p>
+      <div [innerHTML]="vacancy.description"></div>
     </div>
     <div nz-col nzSpan="2">
     </div>
     <div nz-col nzSpan="12">
       <h3>Ключевые навыки</h3>
-      <nz-tag *ngFor="let skill of vacancy.keySkills" [nzColor]="'blue'">
-        {{ skill }}
+      <nz-tag style="margin: 4px" *ngFor="let skill of vacancy.keySkills" [nzColor]="'blue'">
+        {{ skill?.name || skill }}
       </nz-tag>
     </div>
   </div>
