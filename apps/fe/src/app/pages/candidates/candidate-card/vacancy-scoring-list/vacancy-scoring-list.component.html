@@ -12,7 +12,6 @@
       <th>Должность</th>
       <th>Требуемый опыт</th>
       <th>Отдел</th>
-      <th>Приоритет</th>
       <th>Соответствие вакансии</th>
       <th></th>
     </tr>
@@ -28,7 +27,6 @@
         {{ item.vacancy?.experience | needExperience}}
       </td>
       <td>{{ item.vacancy?.vacancyOwner }}</td>
-      <td>{{ item.candidate?.experiences | lastWork }}</td>
       <td>
         <nz-progress [nzPercent]="item.scoring?.percent | number:'1.0-0'"
                      nzType="circle"

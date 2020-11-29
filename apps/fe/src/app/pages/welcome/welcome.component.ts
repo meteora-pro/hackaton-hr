@@ -21,28 +21,6 @@ export class WelcomeComponent implements OnInit {
     this.loadCandidates();
   }
 
-  getPriorityMock(name: string) {
-    switch (true) {
-      case (name || '').length > 50:
-        return 'Высокий';
-      case (name || '').length > 25:
-        return 'Средний';
-      default:
-        return 'Обычный';
-    }
-  }
-
-  getPriorityClass(name: string) {
-    switch (true) {
-      case (name || '').length > 50:
-        return 'priority__primary';
-      case (name || '').length > 25:
-        return 'priority__medium';
-      default:
-        return 'priority__low';
-    }
-  }
-
   private loadCandidates(): void {
     this.candidates$ = this.crudService
       .getEntities('candidate', { limit: 5, sort: {field: 'id', order: 'DESC'} })

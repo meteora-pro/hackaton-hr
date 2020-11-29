@@ -102,7 +102,6 @@
         <th>Должность</th>
         <th>Опыт работы</th>
         <th>Дата открытия</th>
-        <th>Приоритет</th>
         <th>Зарплата</th>
       </tr>
     </thead>
@@ -113,11 +112,6 @@
         </td>
         <td>{{ item.experience | needExperience }}</td>
         <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
-        <td>
-          <span [class]="getPriorityClass(item.name)">
-            {{ getPriorityMock(item.name) }}
-          </span>
-        </td>
         <td style="min-width: 150px">
           {{
             { from: item.salaryFrom | number, to: item.salaryTo | number }
