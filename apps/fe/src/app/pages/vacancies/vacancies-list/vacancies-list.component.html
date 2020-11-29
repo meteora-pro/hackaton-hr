@@ -16,7 +16,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of table.data"  [routerLink]="['/vacancy', item.id]" class="clickable-row">
+    <tr *ngFor="let item of table.data" [routerLink]="['/vacancy', item.id]" class="clickable-row">
       <td>
         <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
       </td>

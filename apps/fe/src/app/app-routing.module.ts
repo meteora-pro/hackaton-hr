@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
   {
-    path: 'welcome',
+    path: '',
     loadChildren: () =>
       import('./pages/welcome/welcome.module').then((m) => m.WelcomeModule),
   },
@@ -36,6 +35,10 @@ const routes: Routes = [
         (m) => m.CandidateCardModule
       ),
   },
+  {
+    path: '**',
+    redirectTo: '/'
+  }
 ];
 
 @NgModule({

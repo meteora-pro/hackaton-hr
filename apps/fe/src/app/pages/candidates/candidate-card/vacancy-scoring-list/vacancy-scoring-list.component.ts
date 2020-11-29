@@ -33,7 +33,8 @@ export class VacancyScoringListComponent {
     this.store.dispatch(new LoadScoringVacancies(page));
   }
 
-  openScoringModal(scoring: VacancyScoring) {
+  openScoringModal(ev: Event, scoring: VacancyScoring) {
+    ev.stopPropagation();
     this.modal.create({
       nzTitle: 'Отчет соответствия кандидата вакансии',
       nzContent: MatchedVacancyModalComponent,

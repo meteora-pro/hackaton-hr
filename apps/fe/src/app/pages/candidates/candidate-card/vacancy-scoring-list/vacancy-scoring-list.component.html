@@ -17,7 +17,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of table.data">
+    <tr *ngFor="let item of table.data" [routerLink]="['/vacancy', item.vacancy.id]" class="clickable-row">
       <td>
         <a [routerLink]="['/vacancy', item.vacancy.id]">
           {{ item.vacancy?.name }}
@@ -33,7 +33,7 @@
                      [nzWidth]="80"></nz-progress>
       </td>
       <td>
-        <button nz-button nzType="default" (click)="openScoringModal(item)">Отчет</button>
+        <button nz-button nzType="default" (click)="openScoringModal($event, item)">Отчет</button>
       </td>
     </tr>
     </tbody>
