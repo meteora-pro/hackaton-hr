@@ -1,7 +1,7 @@
 <h1>Данные по вакансиям и кандидатам</h1>
 
 <div class="cards__container">
-  <nz-card nzHoverable class="cards__card">
+  <nz-card nzHoverable class="cards__card" [routerLink]="['/vacancies']">
     <div class="cards__content">
       <img
         alt="logo"
@@ -13,7 +13,7 @@
     </div>
   </nz-card>
 
-  <nz-card nzHoverable class="cards__card">
+  <nz-card nzHoverable class="cards__card" [routerLink]="['/candidates/list']">
     <div class="cards__content">
       <img
         alt="logo"
@@ -25,7 +25,7 @@
     </div>
   </nz-card>
 
-  <nz-card nzHoverable class="cards__card">
+  <nz-card nzHoverable class="cards__card" [routerLink]="['/candidates/list']">
     <div class="cards__content">
       <img
         alt="logo"
@@ -56,14 +56,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of candidateTable.data"   [routerLink]="['/candidate', item.id]" class="clickable-row">
+    <tr
+      *ngFor="let item of candidateTable.data"
+      [routerLink]="['/candidate', item.id]"
+      class="clickable-row"
+    >
       <td>
         <a [routerLink]="['/candidate', item.id]">{{ item.title }}</a>
       </td>
       <td>{{ item.experiences | workExperienceYears }}</td>
       <td>{{ item.experiences | lastWork }}</td>
       <td>
-        <nz-tag style="margin: 2px"
+        <nz-tag
+          style="margin: 2px"
           *ngFor="let skill of item.skillSet.slice(0, 10)"
           [nzColor]="'blue'"
           [title]="skill"
@@ -106,7 +111,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of vacancyTable.data"    [routerLink]="['/vacancy', item.id]" class="clickable-row">
+      <tr
+        *ngFor="let item of vacancyTable.data"
+        [routerLink]="['/vacancy', item.id]"
+        class="clickable-row"
+      >
         <td>
           <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
         </td>
