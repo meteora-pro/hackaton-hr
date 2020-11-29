@@ -19,15 +19,15 @@ export class CandidateEntity extends BaseEntity implements Candidate {
   fullName: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   phone: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   about: string;
 
   @ApiProperty()
-  @Column()
+  @Column({ nullable: true })
   area: string;
 
   @ApiProperty()
