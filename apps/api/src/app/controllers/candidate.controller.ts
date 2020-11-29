@@ -26,9 +26,13 @@ export class CandidateController implements CrudController<CandidateEntity> {
   @Get('/:id/matched')
   async matchCandidates(
     @Param('id') id: number,
-    @Query('take') take = 25,
+    @Query('limit') take = 25,
     @Query('skip') skip = 0,
+    @Query('page') page = 0,
   ): Promise<VacancyScoring[]> {
+    if (!skip && page !== 0) {
+      skip = page * take;
+    }
     const vacancies = await this.vacancyService.find({take: Math.max(take, 30), skip});
     return vacancies.map(vacancy => ({
       vacancy,
