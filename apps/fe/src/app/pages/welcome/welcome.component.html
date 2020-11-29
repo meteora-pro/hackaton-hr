@@ -56,14 +56,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of candidateTable.data">
+    <tr *ngFor="let item of candidateTable.data"   [routerLink]="['/candidate', item.id]" class="clickable-row">
       <td>
         <a [routerLink]="['/candidate', item.id]">{{ item.title }}</a>
       </td>
       <td>{{ item.experiences | workExperienceYears }}</td>
       <td>{{ item.experiences | lastWork }}</td>
       <td>
-        <nz-tag
+        <nz-tag style="margin: 2px"
           *ngFor="let skill of item.skillSet.slice(0, 10)"
           [nzColor]="'blue'"
           [title]="skill"
@@ -71,7 +71,10 @@
           {{ skill }}
         </nz-tag>
       </td>
-      <td>от {{ item.salary | number }} рублей</td>
+      <td>
+        <span *ngIf="!item.salary">Не указана</span>
+        <span *ngIf="item.salary">от {{ item.salary | number }} рублей</span>
+      </td>
     </tr>
   </tbody>
 </nz-table>
@@ -99,22 +102,16 @@
         <th>Должность</th>
         <th>Опыт работы</th>
         <th>Дата открытия</th>
-        <th>Приоритет</th>
         <th>Зарплата</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of vacancyTable.data">
+      <tr *ngFor="let item of vacancyTable.data"    [routerLink]="['/vacancy', item.id]" class="clickable-row">
         <td>
           <a [routerLink]="['/vacancy', item.id]">{{ item.name }}</a>
         </td>
         <td>{{ item.experience | needExperience }}</td>
         <td>{{ item.createdAt | date: 'dd.MM.yyyy' }}</td>
-        <td>
-          <span [class]="getPriorityClass(item.name)">
-            {{ getPriorityMock(item.name) }}
-          </span>
-        </td>
         <td style="min-width: 150px">
           {{
             { from: item.salaryFrom | number, to: item.salaryTo | number }

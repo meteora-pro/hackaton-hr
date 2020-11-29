@@ -35,7 +35,8 @@ export class CandidateScoringListComponent implements OnInit {
     this.store.dispatch(new LoadScoringCandidates(page));
   }
 
-  openScoringModal(scoring: CandidateScoring) {
+  openScoringModal(ev: Event, scoring: CandidateScoring) {
+    ev.stopPropagation();
     this.modal.create({
       nzTitle: 'Отчет соответствия кандидата вакансии',
       nzContent: ScoringModalComponent,

@@ -10,30 +10,30 @@
     <thead>
     <tr>
       <th>Должность</th>
-      <th>Позиция</th>
+      <th>Требуемый опыт</th>
       <th>Отдел</th>
-      <th>Приоритет</th>
       <th>Соответствие вакансии</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of table.data">
+    <tr *ngFor="let item of table.data" [routerLink]="['/vacancy', item.vacancy.id]" class="clickable-row">
       <td>
-        {{ item?.name }}
+        <a [routerLink]="['/vacancy', item.vacancy.id]">
+          {{ item.vacancy?.name }}
+        </a>
       </td>
       <td>
-        {{ item?.title }}
+        {{ item.vacancy?.experience | needExperience}}
       </td>
-      <td>{{ item.candidate?.experiences | workExperienceYears }}</td>
-      <td>{{ item.candidate?.experiences | lastWork }}</td>
+      <td>{{ item.vacancy?.vacancyOwner }}</td>
       <td>
         <nz-progress [nzPercent]="item.scoring?.percent | number:'1.0-0'"
                      nzType="circle"
                      [nzWidth]="80"></nz-progress>
       </td>
       <td>
-        <button nz-button nzType="default" (click)="openScoringModal(item)">Отчет</button>
+        <button nz-button nzType="default" (click)="openScoringModal($event, item)">Отчет</button>
       </td>
     </tr>
     </tbody>

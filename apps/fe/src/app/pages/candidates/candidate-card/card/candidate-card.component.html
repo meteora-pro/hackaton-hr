@@ -32,13 +32,19 @@
   <br>
   <nz-collapse>
     <nz-collapse-panel nzHeader="Опыт работы">
-      <div *ngFor="let item of candidate.experiences">
-        <b>{{ item.position }}</b><br>
-        {{ item.start | date: 'MM.yyyy' }} - {{ item.end | date: 'MM.yyyy' }}
-        <br><br>
-      </div>
+      <nz-timeline>
+        <nz-timeline-item *ngFor="let item of candidate.experiences">
+          <b>{{ item.position }}</b><br>
+          {{ item.start | date: 'MMM yyyy' }}
+          -
+          {{ item.start && !item.end ? 'Сейчас' : item.end | date: 'MMM yyyy' }}
+        </nz-timeline-item>
+      </nz-timeline>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Ключевые навыки">
+      <nz-tag *ngFor="let skill of candidate.skillSet" [nzColor]="'blue'" [title]="skill">
+        {{ skill }}
+      </nz-tag>
     </nz-collapse-panel>
     <nz-collapse-panel nzHeader="Дополнительно">
     </nz-collapse-panel>
@@ -46,7 +52,7 @@
 
 </ng-container>
 <br>
-<h2>Подходящие кандидаты</h2>
+<h2>Подходящие вакансии</h2>
 <vacancy-scoring-list></vacancy-scoring-list>
 
 <nz-modal [(nzVisible)]="isVisibleRejectModal"

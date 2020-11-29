@@ -9,11 +9,30 @@
   height: 100vh;
 }
 
-.menu-sidebar {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  box-shadow: 2px 0 6px rgba(0,21,41,.35);
+.ant-layout-header {
+  background-color: #508BE2;
+  .logo {
+    padding-left: 24px;
+    float: left;
+    a {
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  }
+  .header-menu {
+    background-color: #508BE2;
+    float: right;
+    li.ant-menu-item {
+      top: 0;
+      border-bottom: none;
+    }
+    .header-menu-username {
+      color: white;
+      margin-left: 4px;
+      margin-right: 20px;
+    }
+  }
 }
 
 .header-trigger {
