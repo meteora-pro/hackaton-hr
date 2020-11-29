@@ -15,7 +15,7 @@ import { Navigate } from '@ngxs/router-plugin';
 
 export interface ConstructorStateModel {
   titles: string[];
-  skills: string[];
+  skills: { name: string, preset: boolean }[];
   skillsLoads: boolean;
   titleLoads: boolean;
 }
@@ -49,8 +49,14 @@ export class VacancyConstructorState {
   }
 
   @Selector()
-  public static skills(state: ConstructorStateModel): string[] {
+  public static skills(state: ConstructorStateModel): { name: string, preset: boolean }[] {
     return state.skills;
+  }
+
+
+  @Selector()
+  public static presetSkills(state: ConstructorStateModel): string[] {
+    return state.skills.filter(skill => skill.preset).map(skill => skill.name);
   }
 
   @Selector()
