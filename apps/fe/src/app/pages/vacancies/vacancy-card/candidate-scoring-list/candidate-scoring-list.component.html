@@ -10,7 +10,7 @@
     <thead>
     <tr>
       <th>Должность</th>
-      <th>Опыт работы</th>
+      <th>Суммарный опыт работы</th>
       <th>Последнее место работы</th>
       <th>Соответствие вакансии</th>
       <th></th>
@@ -21,7 +21,7 @@
       <td>
         {{ item.candidate?.title }}
       </td>
-      <td>{{ item.candidate?.experiences | workExperienceYears }}</td>
+      <td style="min-width: 120px">{{ item.candidate?.experiences | workExperienceYears }}</td>
       <td>{{ item.candidate?.experiences | lastWork }}</td>
       <td>
         <nz-progress [nzPercent]="item.scoring?.percent | number:'1.0-0'"

@@ -32,4 +32,28 @@ export class VacanciesListComponent implements OnInit {
   handleChangePage(page: number) {
     this.store.dispatch(new LoadVacancies(page));
   }
+
+  getPriorityMock(name: string) {
+    switch(true) {
+      case (name || '').length > 50:
+        return 'Высокий';
+      case (name || '').length > 25:
+        return 'Средний';
+      default:
+        return 'Обычный';
+    }
+
+  }
+
+  getPriorityClass(name: string) {
+    switch(true) {
+      case (name || '').length > 50:
+        return 'priority__primary';
+      case (name || '').length > 25:
+        return 'priority__medium';
+      default:
+        return 'priority__low';
+    }
+
+  }
 }
